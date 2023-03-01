@@ -51,9 +51,9 @@ class VideoStream:
 
 
 # Model name
-default_model_dir = r'coral_model_and_reference\examples-camera\all_models\\'
+default_model_dir = r'/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_model_and_reference/examples-camera/all_models/'
 model = 'mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite'
-default_label =  r'C:\Users\jlukas\Desktop\My_Projects\to_upload\Edge_Tpu\coral_model_and_reference\examples-camera\all_models\coco_labels.txt'
+default_label =  r'/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_model_and_reference/examples-camera/all_models/coco_labels.txt'
 
 from tflite_runtime.interpreter import Interpreter
 from tflite_runtime.interpreter import load_delegate

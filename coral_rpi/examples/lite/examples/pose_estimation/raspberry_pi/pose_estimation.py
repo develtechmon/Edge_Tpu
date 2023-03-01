@@ -18,6 +18,7 @@ import sys
 import time
 
 import cv2
+from picamera2 import Picamera2
 from ml import Classifier
 from ml import Movenet
 from ml import MoveNetMultiPose
@@ -63,9 +64,13 @@ def run(estimation_model: str, tracker_type: str, classification_model: str,
   start_time = time.time()
 
   # Start capturing video input from the camera
-  cap = cv2.VideoCapture(camera_id)
-  cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
-  cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+  #cap = cv2.VideoCapture(camera_id)
+  #cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+  #cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+  cap = Picamera2()
+  camera_config = cap.create_still_configuration(main={"size": (640, 480)})  
+  cap.configure(camera_config)
+  cap.start()
 
   # Visualization parameters
   row_size = 20  # pixels
@@ -85,12 +90,13 @@ def run(estimation_model: str, tracker_type: str, classification_model: str,
                                          len(classifier.pose_class_names))
 
   # Continuously capture images from the camera and run inference
-  while cap.isOpened():
-    success, image = cap.read()
-    if not success:
-      sys.exit(
-          'ERROR: Unable to read from webcam. Please verify your webcam settings.'
-      )
+  while True:
+    image = cap.capture_array()
+    #success, image = cap.read()
+    #if not success:
+    #  sys.exit(
+    #      'ERROR: Unable to read from webcam. Please verify your webcam settings.'
+    #  )
 
     counter += 1
     image = cv2.flip(image, 1)
