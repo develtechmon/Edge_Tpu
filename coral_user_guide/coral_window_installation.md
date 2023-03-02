@@ -46,5 +46,9 @@
 --labels test_data/inat_bird_labels.txt \
 --input test_data/parrot.jpg
 
+## Alternatively you can also use tflite_runtime instead of coral. To install tflite
+- > sudo pip install tflite-support
+- > sudo pip install protobuf
+- > sudo pip install numpy
 
 

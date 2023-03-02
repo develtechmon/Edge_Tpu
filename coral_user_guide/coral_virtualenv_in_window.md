@@ -14,3 +14,16 @@
 
 ### You can also use below command to remove all resctrictions on your security policy as follow
 - > Set-ExecutionPolicy Unrestricted
+
+### Installing virtualenv package into our environment
+- > py -3.8 -m pip install virtualenv virtualenv
+
+## Creating virtual environment
+- > cd to /userpath/package
+- > virtualenv env
+
+## By now, you should see (env) environment. To activate
+- > ./env/Scripts/activate
+
+## To deactivate
+- > deactivate
