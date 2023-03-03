@@ -9,7 +9,6 @@ from threading import Thread
 import importlib.util
 from picamera2 import Picamera2
 
-
 # Model name
 default_model_dir = r'/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_model_and_reference/examples-camera/all_models/'
 model = 'mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite'
@@ -30,7 +29,6 @@ with open(default_label, 'r') as f:
 #   'Darwin': 'libedgetpu.1.dylib',
 #   'Windows': 'edgetpu.dll'
 # }[platform.system()]
-
 
 ## For Linux
 interpreter = Interpreter(model_path=default_model_dir + model, experimental_delegates=[load_delegate('libedgetpu.so.1.0')])
@@ -130,8 +128,6 @@ while True:
 
 # Clean up
 cv2.destroyAllWindows()
-videostream.stop()
-
 
 
 

@@ -21,15 +21,14 @@ from data import person_from_keypoints_with_scores
 import numpy as np
 
 # pylint: disable=g-import-not-at-top
-try:
-  # Import TFLite interpreter from tflite_runtime package if it's available.
-  from tflite_runtime.interpreter import Interpreter
-except ImportError:
-  # If not, fallback to use the TFLite interpreter from the full TF package.
-  import tensorflow as tf
-  Interpreter = tf.lite.Interpreter
+# try:
+#   # Import TFLite interpreter from tflite_runtime package if it's available.
+#   from tflite_runtime.interpreter import Interpreter
+# except ImportError:
+#   # If not, fallback to use the TFLite interpreter from the full TF package.
+#   import tensorflow as tf
+#   Interpreter = tf.lite.Interpreter
 # pylint: enable=g-import-not-at-top
-
 
 class Posenet(object):
   """A wrapper class for a Posenet TFLite pose estimation model."""
@@ -41,12 +40,19 @@ class Posenet(object):
         model_name: Name of the TFLite PoseNet model.
     """
     # Append TFLITE extension to model_name if there's no extension
-    _, ext = os.path.splitext(model_name)
-    if not ext:
-      model_name += '.tflite'
+    # _, ext = os.path.splitext(model_name)
+    # if not ext:
+    #   model_name += '.tflite'
 
+    from tflite_runtime.interpreter import Interpreter
+    from tflite_runtime.interpreter import load_delegate
+    
+    model_name = r"/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_rpi/pose_estimation/posenet_edgetpu.tflite"
+    
     # Initialize model
-    interpreter = Interpreter(model_path=model_name, num_threads=4)
+    #interpreter = Interpreter(model_path=model_name, num_threads=4)
+    interpreter = Interpreter(model_path=model_name, experimental_delegates=[load_delegate('libedgetpu.so.1.0')])
+    
     interpreter.allocate_tensors()
 
     self._input_index = interpreter.get_input_details()[0]['index']

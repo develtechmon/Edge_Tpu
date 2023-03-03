@@ -58,6 +58,7 @@ def run(estimation_model: str, tracker_type: str, classification_model: str,
     pose_detector = MoveNetMultiPose(estimation_model, tracker_type)
   else:
     sys.exit('ERROR: Model is not supported.')
+  print("-----------" + estimation_model)
 
   # Variables to calculate FPS
   counter, fps = 0, 0
@@ -161,7 +162,7 @@ def main():
       '--model',
       help='Name of estimation model.',
       required=False,
-      default='movenet_lightning')
+      default='posenet')
   parser.add_argument(
       '--tracker',
       help='Type of tracker to track poses across frames.',
