@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train</folder>
+	<filename>26-with-mask.jpg</filename>
+	<path>C:\Users\Lukas\Desktop\Face_Mask_EdgeTPU\Face_Mask_EdgeTPU\train\26-with-mask.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>444</width>
+		<height>455</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>mask</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>55</xmin>
+			<ymin>43</ymin>
+			<xmax>322</xmax>
+			<ymax>336</ymax>
+		</bndbox>
+	</object>
+</annotation>
