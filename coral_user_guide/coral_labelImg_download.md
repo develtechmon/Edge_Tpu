@@ -9,3 +9,9 @@ To install in Mac
 To launch the software
 - > labellimg
 
+To install in Windows
+- > py -3.8 -m pip install labelimg
+
+To launch the software
+- > labellimg
+
