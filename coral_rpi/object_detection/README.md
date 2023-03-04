@@ -88,7 +88,11 @@ python3 detect.py \
   --enableEdgeTPU
   --model efficientdet_lite0_edgetpu.tflite
 ```
-
+```
+python3 detect_picamv2.py \
+  --enableEdgeTPU
+  --model face_mask_edgetpu.tflite
+```
 You should see significantly faster inference speeds.
 
 For more information about creating and running TensorFlow Lite models with
