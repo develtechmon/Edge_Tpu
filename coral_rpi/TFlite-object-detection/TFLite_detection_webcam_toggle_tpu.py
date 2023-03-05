@@ -86,7 +86,7 @@ class VideoStream:
 
 # Define and parse input arguments
 parser = argparse.ArgumentParser()
-# parser.add_argument('--modeldir', help='Folder the .tflite file is located in',
+#parser.add_argument('--modeldir', help='Folder the .tflite file is located in',
 #                     required=True)
 parser.add_argument('--graph', help='Name of the .tflite file, if different than detect.tflite',
                     default='detect.tflite')
@@ -101,6 +101,7 @@ parser.add_argument('--edgetpu', help='Use Coral Edge TPU Accelerator to speed u
 
 args = parser.parse_args()
 
+#MODEL_NAME = args.modeldir
 MODEL_NAME = r"C:/Users/jlukas/Desktop/My_Projects/to_upload/Edge_Tpu/coral_rpi/TFlite-object-detection/" #args.modeldir
 GRAPH_NAME = args.graph
 LABELMAP_NAME = args.labels
@@ -139,12 +140,12 @@ CWD_PATH = os.getcwd()
 #PATH_TO_CKPT_TPU = os.path.join(CWD_PATH,MODEL_NAME,GRAPH_NAME_TPU)
 #PATH_TO_CKPT_CPU = os.path.join(CWD_PATH,MODEL_NAME,GRAPH_NAME_CPU)
 
-PATH_TO_CKPT_TPU = r"C:\Users\jlukas\Desktop\My_Projects\to_upload\Edge_Tpu\coral_rpi\TFlite-object-detection\edgetpu.tflite"
-PATH_TO_CKPT_CPU = r"C:\Users\jlukas\Desktop\My_Projects\to_upload\Edge_Tpu\coral_rpi\TFlite-object-detection\detect.tflite"
+PATH_TO_CKPT_TPU = r"/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_rpi/TFlite-object-detection/edgetpu.tflite"
+PATH_TO_CKPT_CPU = r"/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_rpi/TFlite-object-detection/detect.tflite"
 
 # Path to label map file
 #PATH_TO_LABELS = os.path.join(CWD_PATH,MODEL_NAME,LABELMAP_NAME)
-PATH_TO_LABELS = r"C:\Users\jlukas\Desktop\My_Projects\to_upload\Edge_Tpu\coral_rpi\TFlite-object-detection\labelmap.txt"
+PATH_TO_LABELS = r"/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_rpi/TFlite-object-detection/labelmap.txt"
 
 # Load the label map
 with open(PATH_TO_LABELS, 'r') as f:
@@ -161,10 +162,10 @@ print("TPU model:", PATH_TO_CKPT_TPU)
 print("CPU model:", PATH_TO_CKPT_CPU)
 
 # Linux
-#interpreter_tpu = Interpreter(model_path=PATH_TO_CKPT_TPU, experimental_delegates=[load_delegate('libedgetpu.so.1.0')])
+interpreter_tpu = Interpreter(model_path=PATH_TO_CKPT_TPU, experimental_delegates=[load_delegate('libedgetpu.so.1.0')])
 
 # WIndow
-interpreter_tpu = Interpreter(model_path=PATH_TO_CKPT_TPU , experimental_delegates=[load_delegate('edgetpu.dll')])
+#interpreter_tpu = Interpreter(model_path=PATH_TO_CKPT_TPU , experimental_delegates=[load_delegate('edgetpu.dll')])
 
 interpreter_cpu = Interpreter(model_path=PATH_TO_CKPT_CPU)
 
