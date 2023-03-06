@@ -118,6 +118,7 @@ CWD_PATH = os.getcwd()
 # Path to .tflite file, which contains the model that is used for object detection
 #PATH_TO_CKPT = os.path.join(CWD_PATH,MODEL_NAME,GRAPH_NAME)
 PATH_TO_CKPT_TPU = r"C:\Users\jlukas\Desktop\My_Projects\to_upload\Edge_Tpu\coral_rpi\TFlite-object-detection\edgetpu.tflite"
+#PATH_TO_CKPT_TPU = r"C:\Users\jlukas\Desktop\My_Projects\Yolo_TFLite_ONNX_CoreML_TensorRT_Export\yolov5\yolov5s-int8.tflite"
 
 # Path to label map file
 #PATH_TO_LABELS = os.path.join(CWD_PATH,MODEL_NAME,LABELMAP_NAME)
