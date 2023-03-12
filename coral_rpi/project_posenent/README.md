@@ -87,6 +87,15 @@ Please also update your system before running these examples. For more informati
   * For [Coral DevBoard](https://coral.withgoogle.com/docs/dev-board/get-started/#update-the-mendel-software)
   * For [USB Accelerator](https://coral.withgoogle.com/docs/accelerator/get-started/#set-up-on-linux-or-raspberry-pi)
 
+## Gstreamer
+Default coral library gstreamer support `buster` OS only. To support `bullseye`, edit following line in 
+`gstreamer.py`
+
+```
+ #PIPELINE = 'v4l2src device=%s ! {src_caps}' % videosrc (buster)
+ PIPELINE = 'libcamerasrc'(bullseye)
+```
+
 To install all other requirements for third party libraries, simply run 
 
 ```
