@@ -4,7 +4,8 @@ import tflite_runtime.interpreter as tflite
 
 # Load the EdgeTPU model
 model_path = 'mediapipe_pose_edgetpu.tflite'
-model_path = r'C:\Users\jlukas\Downloads\posenet_mobilenet_v1_075_324_324_16_quant_decoder_edgetpu.tflite'
+model_path = r'C:\Users\Lukas\Desktop\My_Projects\Edge_Tpu\coral_windows\coral_pose_estimation\project-posenet\models\mobilenet\posenet_mobilenet_v1_075_353_481_quant_decoder_edgetpu.tflite'
+#model_path = r'C:\Users\jlukas\Downloads\posenet_mobilenet_v1_075_324_324_16_quant_decoder_edgetpu.tflite'
 
 ## For Linux    
 #interpreter = tflite.Interpreter(model_path, experimental_delegates=[tflite.load_delegate('libedgetpu.so.1')])

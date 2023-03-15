@@ -56,9 +56,13 @@ class VideoStream:
 # default_label =  r'/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_model_and_reference/examples-camera/all_models/coco_labels.txt'
 
 # Model name Windows
-default_model_dir = r'C:\Users\jlukas\Desktop\My_Projects\to_upload\Edge_Tpu\coral_windows\coral_object_detection_webcam\\'
+#default_model_dir = r'C:\Users\jlukas\Desktop\My_Projects\to_upload\Edge_Tpu\coral_windows\coral_object_detection_webcam\\'
+default_model_dir = r'C:\Users\Lukas\Desktop\My_Projects\Edge_Tpu\coral_windows\coral_object_detection_webcam\\'
+
 model = 'object-detector-quantized_edgetpu.tflite'
-default_label =  r'C:\Users\jlukas\Desktop\My_Projects\to_upload\Edge_Tpu\coral_windows\coral_object_detection_webcam\object_detection_labelmap.txt'
+
+#default_label =  r'C:\Users\jlukas\Desktop\My_Projects\to_upload\Edge_Tpu\coral_windows\coral_object_detection_webcam\object_detection_labelmap.txt'
+default_label =  r'C:\Users\Lukas\Desktop\My_Projects\Edge_Tpu\coral_windows\coral_object_detection_webcam\object_detection_labelmap.txt'
 
 from tflite_runtime.interpreter import Interpreter
 from tflite_runtime.interpreter import load_delegate
