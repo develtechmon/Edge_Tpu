@@ -42,8 +42,12 @@ def run(model: str, camera_id: int, width: int, height: int, num_threads: int,
   start_time = time.time()
 
   # Start capturing video input from the camera
-  picam2 = Picamera2()
+  #picam2 = Picamera2()
   #picam2 = picam2.create_still_configuration(main={"size": (640, 480)})  
+  #picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (640, 480)}))
+  #picam2.start()
+  
+  picam2 = Picamera2()
   picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (640, 480)}))
   picam2.start()
   	
