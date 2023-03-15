@@ -59,10 +59,11 @@ class Movenet(object):
     """
 
     # Append TFLITE extension to model_name if there's no extension
-    _, ext = os.path.splitext(model_name)
-    if not ext:
-      model_name += '.tflite'
+    # _, ext = os.path.splitext(model_name)
+    # if not ext:
+    #   model_name += '.tflite'
 
+    model_name = r'C:\Users\Lukas\Desktop\My_Projects\Edge_Tpu\coral_windows\pose_estimation\movenet_lightning.tflite'
     # Initialize model
     interpreter = Interpreter(model_path=model_name, num_threads=4)
     
