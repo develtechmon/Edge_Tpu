@@ -6,6 +6,8 @@ class Picam:
         
         self.picam2.configure(self.picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (640, 480)}))
 
+        #self.picam2.configure(self.picam2.create_preview_configuration(main={"format": 'XRGB8888'}))
+
         self.picam2.start()
     
     def read(self):
