@@ -16,7 +16,7 @@
 # Import packages
 import os
 import argparse
-import cv2
+import cv2,socket,pickle,os
 import numpy as np
 import sys
 import time
@@ -132,7 +132,7 @@ if labels[0] == '???':
 # If using Edge TPU, use special load_delegate argument
 if use_TPU:
     interpreter = Interpreter(model_path=PATH_TO_CKPT,
-                              experimental_delegates=[load_delegate('edgetpu.dll')]) #edgetpu.dll - libedgetpu.so.1.0
+                              experimental_delegates=[load_delegate('edgetpu.dll')])
     print(PATH_TO_CKPT)
 else:
     interpreter = Interpreter(model_path=PATH_TO_CKPT)
@@ -157,6 +157,12 @@ freq = cv2.getTickFrequency()
 # Initialize video stream
 videostream = VideoStream(resolution=(imW,imH),framerate=30).start()
 time.sleep(1)
+
+# Initialize the socket
+s=socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.setsockopt(socket.SOL_SOCKET,socket.SO_SNDBUF,1000000)
+server_ip = "10.60.215.170"
+server_port = 6666
 
 #for frame1 in camera.capture_continuous(rawCapture, format="bgr",use_video_port=True):
 while True:
@@ -213,6 +219,11 @@ while True:
 
     # All the results have been drawn on the frame, so it's time to display it.
     cv2.imshow('Object detector', frame)
+
+    # New we send the data to socket
+    ret,buffer = cv2.imencode(".jpg",frame,[int(cv2.IMWRITE_JPEG_QUALITY),30])
+    x_as_bytes = pickle.dumps(buffer)
+    s.sendto((x_as_bytes),(server_ip,server_port))
 
     # Calculate framerate
     t2 = cv2.getTickCount()

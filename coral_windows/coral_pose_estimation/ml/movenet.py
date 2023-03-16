@@ -63,7 +63,7 @@ class Movenet(object):
     # if not ext:
     #   model_name += '.tflite'
 
-    model_name = r'C:\Users\Lukas\Desktop\My_Projects\Edge_Tpu\coral_windows\pose_estimation\movenet_lightning.tflite'
+    model_name = r'C:\Users\jlukas\Desktop\My_Projects\to_upload\Edge_Tpu\coral_windows\coral_pose_estimation\movenet_lightning.tflite'
     # Initialize model
     interpreter = Interpreter(model_path=model_name, num_threads=4)
     
