@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import cv2
+import state
 
 class Detect():
     def __init__(self):
@@ -59,6 +60,9 @@ class Detect():
         scores = self.interpreter.get_tensor(self.output_details[2]['index'])[0] # Confidence of detected objects
         #num = interpreter.get_tensor(output_details[3]['index'])[0]  # Total number of detected objects (inaccurate and not needed)
 
+        myobjectlistC = []
+        myobjectlistArea = []
+        
         for i in range(len(scores)):
             if ((scores[i] > self.min_conf_threshold) and (scores[i] <= 1.0)):
 
@@ -72,23 +76,35 @@ class Detect():
                 xmin = int(max(1,(boxes[i][1] * self.imW)))
                 ymax = int(min(self.imH,(boxes[i][2] * self.imH)))
                 xmax = int(min(self.imW,(boxes[i][3] * self.imW)))
-                    
-                if  self.object_name == 'person':
-                    print( self.object_name)
+                
+                xdif = xmax - xmin
+                ydif = ymax - ymin
+                cx = xmin + (xdif/2)
+                cy = ymin + (ydif/2)
+                area = round(xdif * ydif)
+                
+                myobjectlistArea.append(area)
+                myobjectlistC.append([cx,cy])
+                
+                if len(myobjectlistArea) !=0:
+                    if self.object_name == 'person':
+                        print( self.object_name)
+                        
+                        state.set_system_state("draw")
+                        cv2.rectangle(self.frame, (xmin,ymin), (xmax,ymax), (10, 255, 0), 2)
 
-                    cv2.rectangle(self.frame, (xmin,ymin), (xmax,ymax), (10, 255, 0), 2)
-
-                    # Draw label   
-                    labelSize, baseLine = cv2.getTextSize(self.label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2) # Get font size
-                    label_ymin = max(ymin, labelSize[1] + 10) # Make sure not to draw label too close to top of window
-                    cv2.rectangle(self.frame, (xmin, label_ymin-labelSize[1]-10), (xmin+labelSize[0], label_ymin+baseLine-10), (255, 255, 255), cv2.FILLED) # Draw white box to put label text in
-                    cv2.putText(self.frame, self.label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2) # Draw label text
-
-                    return self.frame
+                        # Draw label   
+                        labelSize, baseLine = cv2.getTextSize(self.label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2) # Get font size
+                        label_ymin = max(ymin, labelSize[1] + 10) # Make sure not to draw label too close to top of window
+                        cv2.rectangle(self.frame, (xmin, label_ymin-labelSize[1]-10), (xmin+labelSize[0], label_ymin+baseLine-10), (255, 255, 255), cv2.FILLED) # Draw white box to put label text in
+                        cv2.putText(self.frame, "Lukas", (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2) # Draw label text
+                        i = myobjectlistArea.index(max(myobjectlistArea))
+                        return self.frame,[myobjectlistC[i],myobjectlistArea[i]]
                 
             else:
                 print("---->> " +  self.object_name)
-                return self.frame
-    
+                state.set_system_state("nodraw")
+                return self.frame,[[0,0],0]
+
     def visualize(self):
         pass
