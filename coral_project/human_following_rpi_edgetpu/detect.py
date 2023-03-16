@@ -106,5 +106,4 @@ class Detect():
                 state.set_system_state("nodraw")
                 return self.frame,[[0,0],0]
 
-    def visualize(self):
-        pass
+    
