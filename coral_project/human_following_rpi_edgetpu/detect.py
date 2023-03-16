@@ -4,18 +4,25 @@ import cv2
 
 class Detect():
     def __init__(self):
-        self.path = os.getcwd() + "/coral_project/human_following_rpi_edgetpu/"
-        self.default_model_dir = self.path + 'model/'
+        self.path = os.getcwd() 
+        self.default_model_dir = self.path + '/model/'
         self.model = 'object-detector-quantized_edgetpu.tflite'
-        self.default_label = self.default_model_dir + 'object_detection_labelmap.txt'
-
+        
+        self.default_label = self.default_model_dir +  'object_detection_labelmap.txt'
+        print("----> " + self.path)
+        
         from tflite_runtime.interpreter import Interpreter
         from tflite_runtime.interpreter import load_delegate
 
         with open(self.default_label, 'r') as f:
             self.labels = [line.strip() for line in f.readlines()]
 
-        self.interpreter = Interpreter(model_path=self.default_model_dir + self.model, experimental_delegates=[load_delegate('edgetpu.dll')])
+        # Linux - libedgetpu.so.1.0
+        self.interpreter = Interpreter(model_path=self.default_model_dir + self.model, experimental_delegates=[load_delegate('libedgetpu.so.1.0')]) 
+
+        # Windows -edgetpu.dll
+        #self.interpreter = Interpreter(model_path=self.default_model_dir + self.model, experimental_delegates=[load_delegate('edgetpu.dll')]) 
+        
         self.interpreter.allocate_tensors()
 
         # Get model details
@@ -55,8 +62,8 @@ class Detect():
         for i in range(len(scores)):
             if ((scores[i] > self.min_conf_threshold) and (scores[i] <= 1.0)):
 
-                object_name = self.labels[int(classes[i])] # Look up object name from "labels" array using class index
-                self.label = '%s: %d%%' % (object_name, int(scores[i]*100)) # Example: 'person: 72%'
+                self.object_name = self.labels[int(classes[i])] # Look up object name from "labels" array using class index
+                self.label = '%s: %d%%' % ( self.object_name, int(scores[i]*100)) # Example: 'person: 72%'
 
                 
                 # Get bounding box coordinates and draw box
@@ -66,8 +73,8 @@ class Detect():
                 ymax = int(min(self.imH,(boxes[i][2] * self.imH)))
                 xmax = int(min(self.imW,(boxes[i][3] * self.imW)))
                     
-                if object_name == 'person':
-                    print(object_name)
+                if  self.object_name == 'person':
+                    print( self.object_name)
 
                     cv2.rectangle(self.frame, (xmin,ymin), (xmax,ymax), (10, 255, 0), 2)
 
@@ -80,7 +87,7 @@ class Detect():
                     return self.frame
                 
             else:
-                print("---->> " + object_name)
+                print("---->> " +  self.object_name)
                 return self.frame
     
     def visualize(self):

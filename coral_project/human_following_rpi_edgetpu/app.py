@@ -1,5 +1,6 @@
 
 from camera import *
+from picamera import *
 from detect import *
 import cv2
 import os
@@ -7,10 +8,19 @@ import os
 imW, imH = 640,480
 
 if __name__ == "__main__":
-    cam = VideoStream(resolution=(imW,imH),framerate=30).start()
+    # Webcam
+    #cam = VideoStream(resolution=(imW,imH),framerate=30).start()
+    
+    # PiCam
+    cam = Picam()
+    
     det = Detect()
 
     while True:       
+        # Webcam
+        #cap = cam.read()
+        
+        # PiCam
         cap = cam.read()
         img = det.inference(cap)
         
@@ -20,6 +30,6 @@ if __name__ == "__main__":
             break
 
     cv2.destroyAllWindows()
-    cam.stop()
+    #cam.stop()
 
 

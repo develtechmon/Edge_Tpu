@@ -87,8 +87,8 @@ class VideoStream:
 
 # Define and parse input arguments
 parser = argparse.ArgumentParser()
-# parser.add_argument('--modeldir', help='Folder the .tflite file is located in',
-#                     required=True)
+parser.add_argument('--modeldir', help='Folder the .tflite file is located in',
+                    required=True)
 parser.add_argument('--graph', help='Name of the .tflite file, if different than detect.tflite',
                     default='detect.tflite')
 parser.add_argument('--labels', help='Name of the labelmap file, if different than labelmap.txt',
@@ -102,7 +102,7 @@ parser.add_argument('--edgetpu', help='Use Coral Edge TPU Accelerator to speed u
 
 args = parser.parse_args()
 
-MODEL_NAME = r"C:/Users/jlukas/Desktop/My_Projects/to_upload/Edge_Tpu/coral_rpi/TFlite-object-detection/" #args.modeldir
+MODEL_NAME = args.modeldir
 GRAPH_NAME = args.graph
 LABELMAP_NAME = args.labels
 min_conf_threshold = float(args.threshold)
@@ -137,15 +137,11 @@ if use_TPU:
 CWD_PATH = os.getcwd()
 
 # Path to .tflite file, which contains the model that is used for object detection
-#PATH_TO_CKPT_TPU = os.path.join(CWD_PATH,MODEL_NAME,GRAPH_NAME_TPU)
-#PATH_TO_CKPT_CPU = os.path.join(CWD_PATH,MODEL_NAME,GRAPH_NAME_CPU)
-
-PATH_TO_CKPT_TPU = r"/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_rpi/TFlite-object-detection/edgetpu.tflite"
-PATH_TO_CKPT_CPU = r"/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_rpi/TFlite-object-detection/detect.tflite"
+PATH_TO_CKPT_TPU = os.path.join(CWD_PATH,MODEL_NAME,GRAPH_NAME_TPU)
+PATH_TO_CKPT_CPU = os.path.join(CWD_PATH,MODEL_NAME,GRAPH_NAME_CPU)
 
 # Path to label map file
-#PATH_TO_LABELS = os.path.join(CWD_PATH,MODEL_NAME,LABELMAP_NAME)
-PATH_TO_LABELS = r"/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_rpi/TFlite-object-detection/labelmap.txt"
+PATH_TO_LABELS = os.path.join(CWD_PATH,MODEL_NAME,LABELMAP_NAME)
 
 # Load the label map
 with open(PATH_TO_LABELS, 'r') as f:
