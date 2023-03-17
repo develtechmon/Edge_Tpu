@@ -5,12 +5,21 @@ import state
 
 class Detect():
     def __init__(self):
+
+        '''
+        Working in RPI. Enable this if below doesn't work
         self.path = os.getcwd() 
         self.default_model_dir = self.path + '/model/'
         self.model = 'object-detector-quantized_edgetpu.tflite'
         
         self.default_label = self.default_model_dir +  'object_detection_labelmap.txt'
         print("----> " + self.path)
+        '''
+       
+        self.absolute_path = os.path.dirname(__file__)
+        self.default_model_dir = self.absolute_path + '/model/'
+        self.model = 'object-detector-quantized_edgetpu.tflite'
+        self.default_label = self.default_model_dir + 'object_detection_labelmap.txt'
         
         from tflite_runtime.interpreter import Interpreter
         from tflite_runtime.interpreter import load_delegate
@@ -19,10 +28,10 @@ class Detect():
             self.labels = [line.strip() for line in f.readlines()]
 
         # Linux - libedgetpu.so.1.0
-        self.interpreter = Interpreter(model_path=self.default_model_dir + self.model, experimental_delegates=[load_delegate('libedgetpu.so.1.0')]) 
+        #self.interpreter = Interpreter(model_path=self.default_model_dir + self.model, experimental_delegates=[load_delegate('libedgetpu.so.1.0')]) 
 
         # Windows -edgetpu.dll
-        #self.interpreter = Interpreter(model_path=self.default_model_dir + self.model, experimental_delegates=[load_delegate('edgetpu.dll')]) 
+        self.interpreter = Interpreter(model_path=self.default_model_dir + self.model, experimental_delegates=[load_delegate('edgetpu.dll')]) 
         
         self.interpreter.allocate_tensors()
 
