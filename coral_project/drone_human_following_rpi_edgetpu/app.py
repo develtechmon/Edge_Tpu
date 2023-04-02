@@ -14,7 +14,8 @@ imW, imH = 640,480
 pError   = 0
 altitude = 1.5
 
-pid      = [0.5,0.4]
+#pid      = [0.5,0.4]
+pid      = [0.3,0.1]
 
 def takeoff():
     drone.control_tab.armAndTakeoff(altitude)
@@ -32,8 +33,8 @@ def track(info):
     #print(info[1])
     if (info[1]) != 0:
         state.set_airborne("on")
-        #det.track.trackobject(info,pid,pError,altitude)
-        track.trackobject(info,pid,pError,altitude)
+        det.track.trackobject(info,pid,pError,altitude)
+        #track.trackobject(info,pid,pError,altitude)
 
     else:
         state.set_system_state("search")
@@ -53,11 +54,11 @@ if __name__ == "__main__":
     cam = Picam()
     curr_timestamp = int(datetime.timestamp(datetime.now()))
     
-    path = "/home/jlukas/Desktop/My_Project/Jetson_Nano/Projects/Autonomous_Human_Follower_Drone/record/"
-    writer= cv2.VideoWriter(path + "record" + str(curr_timestamp) + '.mp4', cv2.VideoWriter_fourcc('m', 'p', '4', 'v'), 120 ,(cam.DISPLAY_WIDTH,cam.DISPLAY_HEIGHT))
+    path = "/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_project/drone_human_following_rpi_edgetpu/record/"
+    writer= cv2.VideoWriter(path + "record" + str(curr_timestamp) + '.mp4', cv2.VideoWriter_fourcc('m','p','4','v'), 30 ,(640,480))
 
     # det   = Detect(cam,drone)
-    det = Detect(cam,Drone)
+    det = Detect(cam,drone)
     
     state.set_system_state("takeoff")
     state.set_airborne("off")
@@ -71,7 +72,8 @@ if __name__ == "__main__":
             img, id, info = det.inference(cap)   
             
             det.track.visualise(img,info)
-            
+           
+
             if (state.get_system_state() == "takeoff"):
                 off = threading.Thread(target=takeoff)
                 off.start()
@@ -88,7 +90,6 @@ if __name__ == "__main__":
                         
             elif(state.get_system_state() == "land"):
                 drone.control_tab.land()
-                writer.release()
                 cv2.destroyAllWindows()
 
             elif(state.get_system_state() == "end"):
@@ -100,7 +101,7 @@ if __name__ == "__main__":
                 
                 while not drone.vehicle.mode.name == "GUIDED":
                     sleep(1)
-                     
+            
             writer.write(img)
             #cv2.imshow("Capture",img)
             
@@ -111,5 +112,6 @@ if __name__ == "__main__":
         except Exception as e:
             print(str(e))
             
-    writer.release()  
+    writer.release()
+    cv2.destroyAllWindows()
     

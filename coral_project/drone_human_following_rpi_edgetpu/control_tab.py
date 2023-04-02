@@ -4,7 +4,6 @@ from time import sleep
 from engines import *
 import numpy as np
 import state
-from simple_pid import PID
 
 class controlTab:
     def __init__(self,D):

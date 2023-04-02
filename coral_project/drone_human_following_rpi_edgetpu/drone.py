@@ -10,7 +10,7 @@ class Drone:
     def __init__(self):
         try:
             '''Gazebo'''
-            #self.connection_string = '192.168.8.121:14553'
+            #self.connection_string = '192.168.8.146:14553'
 
             '''SiTL'''
             '''Run sim_vehicle.py --console --map'''

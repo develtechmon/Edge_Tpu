@@ -17,7 +17,7 @@ class Detect():
         self.default_label = self.default_model_dir +  'object_detection_labelmap.txt'
         print("----> " + self.path)
         '''
-       
+       	#self.path = "/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_project/drone_human_following_rpi_edgetpu/model/""
         self.absolute_path = os.path.dirname(__file__)
         self.default_model_dir = self.absolute_path + '/model/'
         self.model = 'object-detector-quantized_edgetpu.tflite'
@@ -30,10 +30,10 @@ class Detect():
             self.labels = [line.strip() for line in f.readlines()]
 
         # Linux - libedgetpu.so.1.0
-        #self.interpreter = Interpreter(model_path=self.default_model_dir + self.model, experimental_delegates=[load_delegate('libedgetpu.so.1.0')]) 
+        self.interpreter = Interpreter(model_path=self.default_model_dir + self.model, experimental_delegates=[load_delegate('libedgetpu.so.1.0')]) 
 
         # Windows -edgetpu.dll
-        self.interpreter = Interpreter(model_path=self.default_model_dir + self.model, experimental_delegates=[load_delegate('edgetpu.dll')]) 
+        #self.interpreter = Interpreter(model_path=self.default_model_dir + self.model, experimental_delegates=[load_delegate('edgetpu.dll')]) 
         
         self.interpreter.allocate_tensors()
 
@@ -97,7 +97,7 @@ class Detect():
                 myobjectlistArea.append(area)
                 myobjectlistC.append([cx,cy])
                 
-                if len(myobjectlistArea) !=0:
+                if len(myobjectlistArea) !=0 and myobjectlistArea != None:
                     if self.object_name == 'person':
                         print( self.object_name)
                         
@@ -112,9 +112,12 @@ class Detect():
                         i = myobjectlistArea.index(max(myobjectlistArea))
                         return self.frame,self.object_name,[myobjectlistC[i],myobjectlistArea[i]]
                 
-            else:
-                print("---->> " +  self.object_name)
-                state.set_visualise_state("nodraw")
-                return self.frame,self.object_name,[[0,0],0]
+                else:
+                    print("---->> " +  self.object_name)
+                    state.set_visualise_state("nodraw")
+                    return self.frame,self.object_name,[[0,0],0]
+                    
+                #else:
+                #    return self.frame,self.object_name,[[0,0],0]
 
     
