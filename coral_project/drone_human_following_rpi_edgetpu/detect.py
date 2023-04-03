@@ -99,7 +99,7 @@ class Detect():
                 
                 if len(myobjectlistArea) !=0 and myobjectlistArea != None:
                     if self.object_name == 'person':
-                        print( self.object_name)
+                        print(self.object_name)
                         
                         state.set_visualise_state("draw")
                         cv2.rectangle(self.frame, (xmin,ymin), (xmax,ymax), (10, 255, 0), 2)

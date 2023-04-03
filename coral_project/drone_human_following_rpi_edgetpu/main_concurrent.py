@@ -7,7 +7,9 @@ from ultrasonic import *
 from time import sleep
 from datetime import datetime
 
-import threading
+# import threading
+from concurrent.futures import ThreadPoolExecutor
+
 import state
 import cv2
 import os
@@ -65,6 +67,8 @@ if __name__ == "__main__":
     state.set_system_state("takeoff")
     state.set_airborne("off")
     
+    executor = ThreadPoolExecutor(12)
+
     while drone.is_active:
         try:
             cap = cam.read()
@@ -75,18 +79,21 @@ if __name__ == "__main__":
             det.track.visualise(img,info)
            
             if (state.get_system_state() == "takeoff"):
-                off = threading.Thread(target=takeoff, daemon=True)
-                off.start()
+                off = executor.submit(takeoff)
+                #off = threading.Thread(target=takeoff, daemon=True)
+                #off.start()
             
             elif(state.get_system_state() == "search"):
                 state.set_time(120)
-                sea = threading.Thread(target=search, daemon=True, args=(id,))
-                sea.start()
+                sea = executor.submit(search,id)
+                #sea = threading.Thread(target=search, daemon=True, args=(id,))
+                #sea.start()
                 
             elif(state.get_system_state() == "track"):
                 state.set_time(120)
-                tra = threading.Thread(target=track, daemon=True, args=(info,))
-                tra.start()
+                tra = executor.submit(track,info)
+                #tra = threading.Thread(target=track, daemon=True, args=(info,))
+                #tra.start()
                         
             elif(state.get_system_state() == "land"):
                 drone.control_tab.land()
