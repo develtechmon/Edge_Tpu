@@ -5,6 +5,7 @@ import time
 
 class ultrasonic (threading.Thread):
     def __init__(self,D,Alt):
+        threading.Thread.__init__(self)
         self.daemon   = True
         self.engine   = D.engines
         self.altitude = Alt

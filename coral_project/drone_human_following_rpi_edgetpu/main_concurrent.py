@@ -61,8 +61,9 @@ if __name__ == "__main__":
 
     det = Detect(cam,drone)
 
-    distance = ultrasonic(drone,altitude)
-    distance.start()
+    # distance = ultrasonic(drone,altitude)
+    # distance.start()
+    # distance.join()
     
     state.set_system_state("takeoff")
     state.set_airborne("off")

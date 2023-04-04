@@ -1,5 +1,9 @@
 import cv2
+import time
 from picamera2 import Picamera2
+
+width = 640
+height = 480
 
 # Grab images as numpy arrays and leave everything else to OpenCV.
 #face_detector = cv2.CascadeClassifier("/usr/share/opencv4/haarcascades/haarcascade_frontalface_default.xml")
@@ -11,8 +15,11 @@ picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888',
 picam2.start()
 
 # Create video writer object
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
-out = cv2.VideoWriter('output.avi', fourcc, 30.0, (width, height))
+filename = f"recording_{time.time()}.mp4"
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+
+#out = cv2.VideoWriter('output.avi',cv2.cv.CV_FOURCC('M','J','P','G'), 20.0, (640,480))
+out = cv2.VideoWriter(filename, fourcc, 30.0, (width, height))
 
 while True:
     im = picam2.capture_array()
