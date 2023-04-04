@@ -97,9 +97,9 @@ class Detect():
                 myobjectlistArea.append(area)
                 myobjectlistC.append([cx,cy])
                 
-                if len(myobjectlistArea) !=0 and myobjectlistArea != None:
+                if len(myobjectlistArea) !=0 and myobjectlistC != None:
                     if self.object_name == 'person':
-                        print(self.object_name)
+                        #print(self.object_name)
                         
                         state.set_visualise_state("draw")
                         cv2.rectangle(self.frame, (xmin,ymin), (xmax,ymax), (10, 255, 0), 2)
@@ -113,11 +113,10 @@ class Detect():
                         return self.frame,self.object_name,[myobjectlistC[i],myobjectlistArea[i]]
                 
                 else:
-                    print("---->> " +  self.object_name)
+                    #print("---->> " +  self.object_name)
                     state.set_visualise_state("nodraw")
                     return self.frame,self.object_name,[[0,0],0]
                     
                 #else:
                 #    return self.frame,self.object_name,[[0,0],0]
 
-    

@@ -44,15 +44,15 @@ class Track:
         text_dur = 'Width : {} Height: {}'.format(self.w, self.h)
         cv2.putText(img, text_dur, (10,16), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (150,150,255), 2)
         
-        if (state.get_system_state() == "draw"):
+        #if (state.get_system_state() == "draw"):
             # Draw Center Middle Line
-            cv2.line(img,(self.w//2,0),(self.w//2,self.h-24), (255,0,255),3)
+            #cv2.line(img,(self.w//2,0),(self.w//2,self.h-24), (255,0,255),3)
         
             # Draw Center Image
-            cv2.circle(img, (self.w // 2, self.h // 2), 10, (0, 0, 255), cv2.FILLED)
+            #cv2.circle(img, (self.w // 2, self.h // 2), 10, (0, 0, 255), cv2.FILLED)
         
             # Draw Center Circle
-            cv2.circle(img, (int(info[0][0]), int(info[0][1])), 10, (0, 0, 255), thickness=-1, lineType=8, shift=0)
+            #cv2.circle(img, (int(info[0][0]), int(info[0][1])), 10, (0, 0, 255), thickness=-1, lineType=8, shift=0)
 
             # Draw Arrowed Line
-            cv2.line(img, (int(self.w // 2), int(self.h // 2)), (int(info[0][0]), int(info[0][1])), (255, 0, 0), 5, 10)
+            #cv2.line(img, (int(self.w // 2), int(self.h // 2)), (int(info[0][0]), int(info[0][1])), (255, 0, 0), 5, 10)

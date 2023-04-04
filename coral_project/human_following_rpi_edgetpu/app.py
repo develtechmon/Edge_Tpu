@@ -1,6 +1,6 @@
 
-from camera import *
-#from picamera import *
+#from camera import *
+from picamera import *
 from detect import *
 from track import *
 import state
@@ -15,32 +15,36 @@ pid      = [0.5,0.4]
 if __name__ == "__main__":
     
     # Webcam
-    cam = VideoStream(resolution=(imW,imH),framerate=30).start()
+    #cam = VideoStream(resolution=(imW,imH),framerate=30).start()
     
     # PiCam
-    #cam = Picam()
+    cam = Picam()
     
     det = Detect()
     track = Track()
 
     while True:       
         #Webcam
-        cap = cam.read()
-        
-        #PiCam
         #cap = cam.read()
         
+        #PiCam
+        cap = cam.read()
+        
         # Perform Inference
-        img,info = det.inference(cap)
+        try:
+            img, info = det.inference(cap)
+            
+            # Perform Tracking
+            track.trackobject(info,pid,pError)
         
-        # Perform Tracking
-        track.trackobject(info,pid,pError)
-        
-        # Visualize
-        track.visualise(img,info)
-        
-        cv2.imshow("Capture",img)
+            # Visualize
+            track.visualise(img,info)
 
+            cv2.imshow("Capture",img)
+        
+        except:
+           pass
+        
         if cv2.waitKey(1) & 0XFF == ord('q'):
             break
 

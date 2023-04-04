@@ -7,6 +7,7 @@ from ultrasonic import *
 from time import sleep
 from datetime import datetime
 
+# import threading
 from concurrent.futures import ThreadPoolExecutor
 
 import state
@@ -27,7 +28,6 @@ def takeoff():
     
 def search(id):
     start = time.time()
-    print(id)
     drone.control_tab.stop_drone(altitude)
     while time.time() - start < state.get_time():
         if (id == "person"):
@@ -43,12 +43,6 @@ def track(info):
         state.set_system_state("search")
         state.set_time(120)
 
-def record():
-    #curr_timestamp = int(datetime.timestamp(datetime.now()))
-    path = "/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_project/drone_human_following_rpi_edgetpu/record/"
-    writer= cv2.VideoWriter(path + "record" + f"{time.time()}" + '.mp4', cv2.VideoWriter_fourcc('m','p','4','v'), 10 ,(640,480))
-    return writer
-
 if __name__ == "__main__":
     while True:
         try:
@@ -60,13 +54,16 @@ if __name__ == "__main__":
     
     # Init PiCam
     cam = Picam()
+    #curr_timestamp = int(datetime.timestamp(datetime.now()))
     
-    writer = record()
+    path = "/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_project/drone_human_following_rpi_edgetpu/record/"
+    writer= cv2.VideoWriter(path + "record" + f"{time.time()}" + '.mp4', cv2.VideoWriter_fourcc('m','p','4','v'), 30 ,(640,480))
 
     det = Detect(cam,drone)
 
-    #distance = ultrasonic(drone,altitude)
-    #distance.start()
+    # distance = ultrasonic(drone,altitude)
+    # distance.start()
+    # distance.join()
     
     state.set_system_state("takeoff")
     state.set_airborne("off")
@@ -80,28 +77,31 @@ if __name__ == "__main__":
             # Perform Inference
             img, id, info = det.inference(cap)   
             
-            # Convert HSV to RGB format
-            frame = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            
             det.track.visualise(img,info)
            
             if (state.get_system_state() == "takeoff"):
                 off = executor.submit(takeoff)
+                #off = threading.Thread(target=takeoff, daemon=True)
+                #off.start()
             
-            if(state.get_system_state() == "search"):
+            elif(state.get_system_state() == "search"):
                 state.set_time(120)
                 sea = executor.submit(search,id)
+                #sea = threading.Thread(target=search, daemon=True, args=(id,))
+                #sea.start()
                 
-            if(state.get_system_state() == "track"):
+            elif(state.get_system_state() == "track"):
                 state.set_time(120)
                 tra = executor.submit(track,info)
+                #tra = threading.Thread(target=track, daemon=True, args=(info,))
+                #tra.start()
                         
-            if(state.get_system_state() == "land"):
+            elif(state.get_system_state() == "land"):
                 drone.control_tab.land()
                 cv2.destroyAllWindows()
                 writer.release()
 
-            if(state.get_system_state() == "end"):
+            elif(state.get_system_state() == "end"):
                 state.set_system_state("takeoff")
                 state.set_airborne("off")
                 
@@ -109,12 +109,10 @@ if __name__ == "__main__":
                 
                 while not drone.vehicle.mode.name == "GUIDED":
                     sleep(1)
-                writer=record()
             
-            print(state.get_system_state())
-            
-            cv2.imshow("Capture",frame)
+            frame = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             writer.write(frame)
+            cv2.imshow("Capture",img)
             
             if cv2.waitKey(1) & 0XFF == ord('q'):
                #os.system("echo 2328 | sudo -S pkill -9 -f main.py")

@@ -12,7 +12,7 @@ class ultrasonic (threading.Thread):
         self.distance = 0
 
         self.TRIG = 23
-        self.ECHO - 24
+        self.ECHO = 24
 
         self.trigger = gpiozero.OutputDevice(self.TRIG)
         self.echo = gpiozero.DigitalInputDevice(self.ECHO)
