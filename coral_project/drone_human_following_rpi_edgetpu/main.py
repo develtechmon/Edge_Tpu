@@ -41,6 +41,15 @@ def track(info):
         state.set_system_state("search")
         state.set_time(120)
 
+def record():
+    #curr_timestamp = int(datetime.timestamp(datetime.now()))
+    path = "/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_project/drone_human_following_rpi_edgetpu/record/"
+    writer= cv2.VideoWriter(path + "record" + f"{time.time()}" + '.mp4', cv2.VideoWriter_fourcc('m','p','4','v'), 10 ,(640,480))
+    return writer
+
+def write(frame):
+    writer.write(frame)
+
 if __name__ == "__main__":
     while True:
         try:
@@ -54,14 +63,12 @@ if __name__ == "__main__":
     cam = Picam()
     curr_timestamp = int(datetime.timestamp(datetime.now()))
     
-    path = "/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_project/drone_human_following_rpi_edgetpu/record/"
-    writer= cv2.VideoWriter(path + "record" + str(curr_timestamp) + '.mp4', cv2.VideoWriter_fourcc('m','p','4','v'), 30 ,(640,480))
+    writer = record()
 
     det = Detect(cam,drone)
 
-    # distance = ultrasonic(drone,altitude)
-    # distance.start()
-    # distance.join()
+    #distance = ultrasonic(drone,altitude)
+    #distance.start()
     
     state.set_system_state("takeoff")
     state.set_airborne("off")
@@ -72,6 +79,9 @@ if __name__ == "__main__":
             
             # Perform Inference
             img, id, info = det.inference(cap)   
+            
+            # Convert HSV to RGB format
+            frame = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             
             det.track.visualise(img,info)
            
@@ -92,6 +102,7 @@ if __name__ == "__main__":
             elif(state.get_system_state() == "land"):
                 drone.control_tab.land()
                 cv2.destroyAllWindows()
+                writer.release()
 
             elif(state.get_system_state() == "end"):
                 state.set_system_state("takeoff")
@@ -101,10 +112,16 @@ if __name__ == "__main__":
                 
                 while not drone.vehicle.mode.name == "GUIDED":
                     sleep(1)
+                writer=record()
             
-            writer.write(img)
-            cv2.imshow("Capture",img)
+            print(state.get_system_state())
             
+            cv2.imshow("Capture",frame)
+            #writer.write(frame)
+
+            wri = threading.Thread(target=write,daemon=True,args=(frame,))
+            wri.start()
+
             if cv2.waitKey(1) & 0XFF == ord('q'):
                #os.system("echo 2328 | sudo -S pkill -9 -f main.py")
                break
