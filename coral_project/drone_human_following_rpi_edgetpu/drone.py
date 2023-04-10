@@ -11,17 +11,24 @@ class Drone:
         try:
             '''Gazebo'''
             #self.connection_string = '192.168.8.146:14553'
-            self.connection_string = '192.168.8.146:14553'
+            #self.connection_string = '192.168.8.146:14553'
             
             '''SiTL'''
             '''Run sim_vehicle.py --console --map'''
             #self.connection_string = '127.0.0.1:14550'
             
-            '''Jetson Nano TX RX'''
-            #self.connection_string = '/dev/ttyTHS1,921600'
+            '''
+            RPI TX RX
+            
+            Set this setting in Mission Planner. 
+            Write and then restart Pixhawk
+            Telemetry 2 (Serial2)
+            SERIAL2_BAUD = 921
+            SERIAL2_PROTOCOL = 1 (Mavlink)
 
-            '''Jetson Nano USB Serial'''
-            #self.connection_string = '/dev/ttyACM0'
+            '''
+            self.connection_string = '/dev/ttyAMA0,921600'
+
             
             self.vehicle = connect(self.connection_string, wait_ready=True)
             print("Virtual Copter is ready")

@@ -116,8 +116,8 @@ if __name__ == "__main__":
             
             print(state.get_system_state())
             
-            cv2.imshow("Capture",frame)
-            #writer.write(frame)
+            #cv2.imshow("Capture",frame)
+            writer.write(frame)
 
             wri = threading.Thread(target=write,daemon=True,args=(frame,))
             wri.start()
