@@ -39,7 +39,7 @@ def track(info):
       
     else:
         state.set_system_state("search")
-        state.set_time(120)
+        state.set_time(60)
 
 def record():
     #curr_timestamp = int(datetime.timestamp(datetime.now()))
@@ -90,12 +90,12 @@ if __name__ == "__main__":
                 off.start()
             
             elif(state.get_system_state() == "search"):
-                state.set_time(120)
+                state.set_time(60)
                 sea = threading.Thread(target=search, daemon=True, args=(id,))
                 sea.start()
                 
             elif(state.get_system_state() == "track"):
-                state.set_time(120)
+                state.set_time(60)
                 tra = threading.Thread(target=track, daemon=True, args=(info,))
                 tra.start()
                         
@@ -116,11 +116,11 @@ if __name__ == "__main__":
             
             print(state.get_system_state())
             
-            #cv2.imshow("Capture",frame)
+            cv2.imshow("Capture",frame)
             writer.write(frame)
 
-            wri = threading.Thread(target=write,daemon=True,args=(frame,))
-            wri.start()
+            #wri = threading.Thread(target=write,daemon=True,args=(frame,))
+            #wri.start()
 
             if cv2.waitKey(1) & 0XFF == ord('q'):
                #os.system("echo 2328 | sudo -S pkill -9 -f main.py")
