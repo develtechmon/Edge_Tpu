@@ -13,8 +13,6 @@ import state
 import cv2
 import os
 
-imW, imH = 640,480
-
 pError   = 0
 altitude = 1.5
 
