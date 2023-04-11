@@ -27,7 +27,6 @@ def takeoff():
     
 def search(id):
     start = time.time()
-    print(id)
     drone.control_tab.stop_drone(altitude)
     while time.time() - start < state.get_time():
         if (id == "person"):
@@ -48,6 +47,9 @@ def record():
     path = "/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_project/drone_human_following_rpi_edgetpu/record/"
     writer= cv2.VideoWriter(path + "record" + f"{time.time()}" + '.mp4', cv2.VideoWriter_fourcc('m','p','4','v'), 10 ,(640,480))
     return writer
+
+def write(frame):
+    writer.write(frame)
 
 if __name__ == "__main__":
     while True:
@@ -115,6 +117,9 @@ if __name__ == "__main__":
             
             cv2.imshow("Capture",frame)
             writer.write(frame)
+
+            #wri = threading.Thread(target=write,daemon=True,args=(frame,))
+            #wri.start()
             
             if cv2.waitKey(1) & 0XFF == ord('q'):
                #os.system("echo 2328 | sudo -S pkill -9 -f main.py")

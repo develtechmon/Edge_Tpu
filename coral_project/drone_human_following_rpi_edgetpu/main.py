@@ -8,6 +8,7 @@ from time import sleep
 from datetime import datetime
 
 import threading
+
 import state
 import cv2
 import os
@@ -39,7 +40,7 @@ def track(info):
       
     else:
         state.set_system_state("search")
-        state.set_time(60)
+        state.set_time(120)
 
 def record():
     #curr_timestamp = int(datetime.timestamp(datetime.now()))
@@ -61,7 +62,6 @@ if __name__ == "__main__":
     
     # Init PiCam
     cam = Picam()
-    curr_timestamp = int(datetime.timestamp(datetime.now()))
     
     writer = record()
 
@@ -90,12 +90,12 @@ if __name__ == "__main__":
                 off.start()
             
             elif(state.get_system_state() == "search"):
-                state.set_time(60)
+                state.set_time(120)
                 sea = threading.Thread(target=search, daemon=True, args=(id,))
                 sea.start()
                 
             elif(state.get_system_state() == "track"):
-                state.set_time(60)
+                state.set_time(120)
                 tra = threading.Thread(target=track, daemon=True, args=(info,))
                 tra.start()
                         
