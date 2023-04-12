@@ -115,10 +115,10 @@ if __name__ == "__main__":
             print(state.get_system_state())
             
             cv2.imshow("Capture",frame)
-            #writer.write(frame)
+            writer.write(frame)
 
-            wri = threading.Thread(target=write,daemon=True,args=(frame,))
-            wri.start()
+            #wri = threading.Thread(target=write,daemon=True,args=(frame,))
+            #wri.start()
 
             if cv2.waitKey(1) & 0XFF == ord('q'):
                #os.system("echo 2328 | sudo -S pkill -9 -f main.py")
