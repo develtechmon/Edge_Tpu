@@ -20,7 +20,7 @@ from dronekit import *
    This IP address is based on given ZeroTier IP address'''
 #connection_string = '192.168.195.204:14551'
 #connection_string = '192.168.195.204:14553'
-#connection_string = '192.168.8.141:14553'
+#connection_string = '192.168.8.146:14553'
 
 '''Using Uart Serial Rx->Tx and Tx-Rx connection'''
 # For Jetson Nano
