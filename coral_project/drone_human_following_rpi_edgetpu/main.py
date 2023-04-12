@@ -99,7 +99,7 @@ if __name__ == "__main__":
                         
             elif(state.get_system_state() == "land"):
                 drone.control_tab.land()
-                cv2.destroyAllWindows()
+                #cv2.destroyAllWindows()
                 writer.release()
 
             elif(state.get_system_state() == "end"):
@@ -114,7 +114,7 @@ if __name__ == "__main__":
             
             print(state.get_system_state())
             
-            cv2.imshow("Capture",frame)
+            #cv2.imshow("Capture",frame)
             writer.write(frame)
 
             #wri = threading.Thread(target=write,daemon=True,args=(frame,))
@@ -128,5 +128,5 @@ if __name__ == "__main__":
             print(str(e))
             
     writer.release()
-    cv2.destroyAllWindows()
+    #cv2.destroyAllWindows()
     
