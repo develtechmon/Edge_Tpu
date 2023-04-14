@@ -13,8 +13,6 @@ import state
 import cv2
 import os
 
-imW, imH = 640,480
-
 pError   = 0
 altitude = 1.5
 
@@ -40,7 +38,7 @@ def track(info):
       
     else:
         state.set_system_state("search")
-        state.set_time(120)
+        state.set_time(60)
 
 def record():
     #curr_timestamp = int(datetime.timestamp(datetime.now()))
@@ -91,16 +89,16 @@ if __name__ == "__main__":
                 off = executor.submit(takeoff)
             
             if(state.get_system_state() == "search"):
-                state.set_time(120)
+                state.set_time(60)
                 sea = executor.submit(search,id)
                 
             if(state.get_system_state() == "track"):
-                state.set_time(120)
+                state.set_time(60)
                 tra = executor.submit(track,info)
                         
             if(state.get_system_state() == "land"):
                 drone.control_tab.land()
-                cv2.destroyAllWindows()
+                #cv2.destroyAllWindows()
                 writer.release()
 
             if(state.get_system_state() == "end"):
@@ -113,9 +111,9 @@ if __name__ == "__main__":
                     sleep(1)
                 writer=record()
             
-            print(state.get_system_state())
+            #print(state.get_system_state())
             
-            cv2.imshow("Capture",frame)
+            #cv2.imshow("Capture",frame)
             writer.write(frame)
 
             #wri = threading.Thread(target=write,daemon=True,args=(frame,))
@@ -129,5 +127,5 @@ if __name__ == "__main__":
             print(str(e))
             
     writer.release()
-    cv2.destroyAllWindows()
+    #cv2.destroyAllWindows()
     

@@ -112,7 +112,7 @@ if __name__ == "__main__":
                     sleep(1)
                 writer=record()
             
-            print(state.get_system_state())
+            #print(state.get_system_state())
             
             #cv2.imshow("Capture",frame)
             writer.write(frame)
