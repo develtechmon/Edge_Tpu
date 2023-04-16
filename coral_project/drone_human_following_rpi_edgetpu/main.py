@@ -14,10 +14,10 @@ import cv2
 import os
 
 pError   = 0
-altitude = 1.5
+altitude = 1.3
 
-#pid      = [0.5,0.4]
-pid      = [0.3,0.1]
+pid      = [0.5,0.4]
+#pid      = [0.3,0.1]
 
 def takeoff():
     drone.control_tab.armAndTakeoff(altitude)
