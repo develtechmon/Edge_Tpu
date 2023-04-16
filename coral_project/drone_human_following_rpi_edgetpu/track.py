@@ -23,7 +23,8 @@ class Track:
             
             #self.posX   = int(np.interp(self.posXC, [-self.w//4, self.w//4], [-15,15]))
 
-            self.posX   = int(np.clip(self.posXC, -10,10))
+            #self.posX   = int(np.clip(self.posXC, -10,10))
+            self.posX    = (np.clip(self.posXC, -10,10))
 	    
             self.pError = error
             
