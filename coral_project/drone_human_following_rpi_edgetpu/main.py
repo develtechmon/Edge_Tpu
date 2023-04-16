@@ -26,7 +26,8 @@ def takeoff():
 def search(id):
     start = time.time()
     drone.control_tab.stop_drone(altitude)
-    while time.time() - start < state.get_time():
+    #while time.time() - start < state.get_time():
+    while time.time() - start < 60:
         if (id == "person"):
             state.set_system_state("track")
     state.set_system_state("land")
@@ -38,7 +39,7 @@ def track(info):
       
     else:
         state.set_system_state("search")
-        state.set_time(60)
+        #state.set_time(60)
 
 def record():
     #curr_timestamp = int(datetime.timestamp(datetime.now()))
@@ -88,12 +89,12 @@ if __name__ == "__main__":
                 off.start()
             
             elif(state.get_system_state() == "search"):
-                state.set_time(60)
+                #state.set_time(60)
                 sea = threading.Thread(target=search, daemon=True, args=(id,))
                 sea.start()
                 
             elif(state.get_system_state() == "track"):
-                state.set_time(60)
+                #state.set_time(60)
                 tra = threading.Thread(target=track, daemon=True, args=(info,))
                 tra.start()
                         
