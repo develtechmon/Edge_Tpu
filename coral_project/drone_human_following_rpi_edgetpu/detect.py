@@ -80,7 +80,6 @@ class Detect():
                 self.object_name = self.labels[int(classes[i])] # Look up object name from "labels" array using class index
                 self.label = '%s: %d%%' % ( self.object_name, int(scores[i]*100)) # Example: 'person: 72%'
 
-                
                 # Get bounding box coordinates and draw box
                 # Interpreter can return coordinates that are outside of image dimensions, need to force them to be within image using max() and min()
                 ymin = int(max(1,(boxes[i][0] * self.imH)))
