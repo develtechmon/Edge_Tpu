@@ -1,5 +1,6 @@
 import state
 import threading
+import record
 from time import time, sleep
 from main_core import *
 import cv2
@@ -46,7 +47,7 @@ class Core:
         elif(state.get_system_state() == "land"):
             self.drone.control_tab.land()
             #cv2.destroyAllWindows()
-            #self.writer.release
+            self.writer.release
 
         elif(state.get_system_state() == "end"):
             state.set_system_state("takeoff")
@@ -56,7 +57,7 @@ class Core:
         
             while not self.drone.vehicle.mode.name == "GUIDED":
                 sleep(1)
-            #writer=record()
+            self.writer = record()
 
 
             

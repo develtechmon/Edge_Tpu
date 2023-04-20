@@ -8,23 +8,16 @@ from core import *
 from time import sleep
 from datetime import datetime
 
-import threading
-
 import state
 import cv2
 import os
+import record
 
 pError   = 0
 altitude = 1.3
 
 pid      = [0.5,0.4]
 #pid      = [0.3,0.1]
-
-def record():
-    #curr_timestamp = int(datetime.timestamp(datetime.now()))
-    path = "/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_project/drone_human_following_rpi_edgetpu/record/"
-    writer= cv2.VideoWriter(path + "record" + f"{time.time()}" + '.mp4', cv2.VideoWriter_fourcc('m','p','4','v'), 10 ,(640,480))
-    return writer
 
 if __name__ == "__main__":
     while True:

@@ -38,7 +38,6 @@ def track(info):
       
     else:
         state.set_system_state("search")
-        #state.set_time(60)
 
 def record():
     #curr_timestamp = int(datetime.timestamp(datetime.now()))

@@ -20,11 +20,9 @@ class Track:
         if ((self.info[1]) !=0):
             error = self.w//2 - self.info[0][0]
             self.posXC  = (self.pid[0]*error + self.pid[1]*(error-self.pError))
-            
             self.posX   = (np.interp(self.posXC, [-self.w//4, self.w//4], [-10,10]))
 
-            #self.posX   = int(np.clip(self.posXC, -10,10))
-            #self.posX    = (np.clip(self.posXC, -10,10))
+            #self.posX   = (np.clip(self.posXC, -10,10))
 	    
             self.pError = error
             

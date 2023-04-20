@@ -71,9 +71,12 @@ class Detect():
         scores = self.interpreter.get_tensor(self.output_details[2]['index'])[0] # Confidence of detected objects
         #num = interpreter.get_tensor(output_details[3]['index'])[0]  # Total number of detected objects (inaccurate and not needed)
 
-        myobjectlistC = []
-        myobjectlistArea = []
+        #myobjectlistC = []
+        #myobjectlistArea = []
         
+        myobjectlistC = np.zeros((2,2))
+        myobjectlistArea = np.zeros((2,2))
+
         for i in range(len(scores)):
             if ((scores[i] > self.min_conf_threshold) and (scores[i] <= 1.0)):
 
@@ -93,8 +96,13 @@ class Detect():
                 cy = ymin + (ydif/2)
                 area = round(xdif * ydif)
                 
-                myobjectlistArea.append(area)
-                myobjectlistC.append([cx,cy])
+                # Using Numpy
+                myobjectlistArea = np.append(myobjectlistArea,area)
+                myobjectlistC = np.append(myobjectlistC,[cx,cy])
+                
+                # Using List
+                #myobjectlistArea.append(area)
+                #myobjectlistC.append([cx,cy])
                 
                 if len(myobjectlistArea) !=0 and myobjectlistC != None:
                     if self.object_name == 'person':
@@ -108,8 +116,14 @@ class Detect():
                         label_ymin = max(ymin, labelSize[1] + 10) # Make sure not to draw label too close to top of window
                         cv2.rectangle(self.frame, (xmin, label_ymin-labelSize[1]-10), (xmin+labelSize[0], label_ymin+baseLine-10), (255, 255, 255), cv2.FILLED) # Draw white box to put label text in
                         cv2.putText(self.frame, "Lukas", (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2) # Draw label text
-                        i = myobjectlistArea.index(max(myobjectlistArea))
-                        return self.frame,self.object_name,[myobjectlistC[i],myobjectlistArea[i]]
+                        
+                        # Using Numpy
+                        i = np.argmax(myobjectlistArea)
+                        return (self.frame,self.object_name,[[myobjectlistC[i], myobjectlistC[i+1]], myobjectlistArea[i]])
+
+                        # Using List
+                        #i = myobjectlistArea.index(max(myobjectlistArea))
+                        #return self.frame,self.object_name,[myobjectlistC[i],myobjectlistArea[i]]
                 
                 else:
                     #print("---->> " +  self.object_name)
