@@ -3,6 +3,7 @@ from detect import *
 from track import *
 from drone import *
 from ultrasonic import *
+import record
 
 from time import sleep
 from datetime import datetime
@@ -39,11 +40,7 @@ def track(info):
     else:
         state.set_system_state("search")
 
-def record():
-    #curr_timestamp = int(datetime.timestamp(datetime.now()))
-    path = "/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_project/drone_human_following_rpi_edgetpu/record/"
-    writer= cv2.VideoWriter(path + "record" + f"{time.time()}" + '.mp4', cv2.VideoWriter_fourcc('m','p','4','v'), 10 ,(640,480))
-    return writer
+# record function is here
 
 if __name__ == "__main__":
     while True:
@@ -94,6 +91,7 @@ if __name__ == "__main__":
             elif(state.get_system_state() == "land"):
                 drone.control_tab.land()
                 #cv2.destroyAllWindows()
+                
                 writer.release()
 
             elif(state.get_system_state() == "end"):
