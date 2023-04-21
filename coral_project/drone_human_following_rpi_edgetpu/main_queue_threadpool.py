@@ -2,7 +2,7 @@ from picamera import *
 from detect import *
 from track import *
 from drone import *
-#from ultrasonic import *
+from distance import *
 
 from time import sleep
 from datetime import datetime
@@ -81,8 +81,8 @@ if __name__ == "__main__":
     
     det = Detect(cam,drone)
 
-    #distance = ultrasonic(drone,altitude)
-    #distance.start()
+    dis = Distance(drone,altitude)
+    dis.start()
     
     state.set_system_state("takeoff")
     state.set_airborne("off")
