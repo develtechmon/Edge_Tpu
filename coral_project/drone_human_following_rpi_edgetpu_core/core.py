@@ -30,7 +30,7 @@ class Core:
         self.drone = drone
         self.altitude = altitude
         self.det = det
-        self.writer
+        self.writer = writer
 
         if (state.get_system_state() == "takeoff"):
             off = threading.Thread(target=self.takeoff, daemon=True)

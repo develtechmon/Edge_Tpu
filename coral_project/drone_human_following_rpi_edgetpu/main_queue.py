@@ -2,7 +2,7 @@ from picamera import *
 from detect import *
 from track import *
 from drone import *
-from ultrasonic import *
+#from ultrasonic import *
 
 from time import sleep
 from datetime import datetime
@@ -18,7 +18,7 @@ pError   = 0
 altitude = 1.3
 
 pid      = [0.5,0.4]
-#pid      = [0.3,0.1]
+#pid      = [0.3,0.1
 
 def takeoff():
     drone.control_tab.armAndTakeoff(altitude)
@@ -42,7 +42,7 @@ def track(info):
 
 def write_video(frame_queue):
     path = "/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_project/drone_human_following_rpi_edgetpu/record/"
-    out= cv2.VideoWriter(path + "record" + f"{time.time()}" + '.mp4', cv2.VideoWriter_fourcc('m','p','4','v'), 10 ,(640,480))
+    out= cv2.VideoWriter(path + "record_queue" + f"{time.time()}" + '.mp4', cv2.VideoWriter_fourcc('m','p','4','v'), 10 ,(640,480))
     
     while True:
         #Get the next frame frome the queue
@@ -53,11 +53,10 @@ def write_video(frame_queue):
             break
         
         # Write the frame to the output video
-        out.writer(frame)
+        out.write(frame)
 
     # Release the videowriter
     out.release()
-
 
 # Create a queue to hold the frames
 frame_queue = queue.Queue()

@@ -71,11 +71,11 @@ class Detect():
         scores = self.interpreter.get_tensor(self.output_details[2]['index'])[0] # Confidence of detected objects
         #num = interpreter.get_tensor(output_details[3]['index'])[0]  # Total number of detected objects (inaccurate and not needed)
 
-        #myobjectlistC = []
-        #myobjectlistArea = []
+        myobjectlistC = []
+        myobjectlistArea = []
         
-        myobjectlistC = np.zeros((2,2))
-        myobjectlistArea = np.zeros((2,2))
+        #myobjectlistC = np.zeros((2,2))
+        #myobjectlistArea = np.zeros((2,2))
 
         for i in range(len(scores)):
             if ((scores[i] > self.min_conf_threshold) and (scores[i] <= 1.0)):
@@ -100,13 +100,20 @@ class Detect():
                 myobjectlistArea = np.append(myobjectlistArea,area)
                 myobjectlistC = np.append(myobjectlistC,[cx,cy])
                 
+                print("Area >> ", myobjectlistArea)
+                print("Cx,Cy >> ", myobjectlistC)
+
                 # Using List
                 #myobjectlistArea.append(area)
                 #myobjectlistC.append([cx,cy])
                 
-                if len(myobjectlistArea) !=0 and myobjectlistC != None:
+                #print("Area >> ", myobjectlistArea)
+                #print("Cx,Cy >> ", myobjectlistC)
+                
+                #if len(myobjectlistArea) !=0 and myobjectlistC != None:
+                if len(myobjectlistArea) !=0:
                     if self.object_name == 'person':
-                        #print(self.object_name)
+                        print(self.object_name)
                         
                         state.set_visualise_state("draw")
                         cv2.rectangle(self.frame, (xmin,ymin), (xmax,ymax), (10, 255, 0), 2)
@@ -119,6 +126,9 @@ class Detect():
                         
                         # Using Numpy
                         i = np.argmax(myobjectlistArea)
+                        print(">> ",i)
+                        print(">> ", [[myobjectlistC[i],myobjectlistC[i+1]],myobjectlistArea[i]]) 
+                        
                         return (self.frame,self.object_name,[[myobjectlistC[i], myobjectlistC[i+1]], myobjectlistArea[i]])
 
                         # Using List

@@ -3,7 +3,7 @@ from detect import *
 from track import *
 from drone import *
 from ultrasonic import *
-import record
+from record import *
 
 from time import sleep
 from datetime import datetime
@@ -70,7 +70,9 @@ if __name__ == "__main__":
             
             # Perform Inference
             img, id, info = det.inference(cap)   
-            
+           
+            print("info >> ", info)
+
             # Convert HSV to RGB format
             frame = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             

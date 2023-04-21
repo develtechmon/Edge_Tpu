@@ -3,8 +3,8 @@ from detect import *
 from track import *
 from drone import *
 from ultrasonic import *
-import record
 from core import *
+from record import *
 
 from time import sleep
 from datetime import datetime

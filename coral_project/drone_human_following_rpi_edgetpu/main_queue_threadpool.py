@@ -2,7 +2,7 @@ from picamera import *
 from detect import *
 from track import *
 from drone import *
-from ultrasonic import *
+#from ultrasonic import *
 
 from time import sleep
 from datetime import datetime
@@ -42,7 +42,7 @@ def track(info):
 
 def write_video(frame_queue):
     path = "/home/jlukas/Desktop/My_Project/Edge_Tpu/coral_project/drone_human_following_rpi_edgetpu/record/"
-    out= cv2.VideoWriter(path + "record" + f"{time.time()}" + '.mp4', cv2.VideoWriter_fourcc('m','p','4','v'), 10 ,(640,480))
+    out= cv2.VideoWriter(path + "record_queue_threadpool" + f"{time.time()}" + '.mp4', cv2.VideoWriter_fourcc('m','p','4','v'), 10 ,(640,480))
     
     while True:
         #Get the next frame frome the queue
@@ -53,7 +53,7 @@ def write_video(frame_queue):
             break
         
         # Write the frame to the output video
-        out.writer(frame)
+        out.write(frame)
 
     # Release the videowriter
     out.release()
@@ -102,21 +102,19 @@ if __name__ == "__main__":
             if (state.get_system_state() == "takeoff"):
                 off = executor.submit(takeoff)
             
-            if(state.get_system_state() == "search"):
-                state.set_time(60)
+            elif(state.get_system_state() == "search"):
                 sea = executor.submit(search,id)
                 
-            if(state.get_system_state() == "track"):
-                state.set_time(60)
+            elif(state.get_system_state() == "track"):
                 tra = executor.submit(track,info)
                         
-            if(state.get_system_state() == "land"):
+            elif(state.get_system_state() == "land"):
                 drone.control_tab.land()
                 #cv2.destroyAllWindows()
 
                 frame_queue.put(None)
 
-            if(state.get_system_state() == "end"):
+            elif(state.get_system_state() == "end"):
                 state.set_system_state("takeoff")
                 state.set_airborne("off")
                 
@@ -124,10 +122,10 @@ if __name__ == "__main__":
                 
                 while not drone.vehicle.mode.name == "GUIDED":
                     sleep(1)
-                
+
                 rec = threading.Thread(target=write_video, args=(frame_queue,))
                 rec.start()
-            
+
             frame_queue.put(img)
 
             cv2.imshow("Capture",frame)

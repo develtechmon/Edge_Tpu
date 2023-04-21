@@ -26,7 +26,7 @@ class Track:
 	    
             self.pError = error
             
-            print(str(self.posX) + " " + str(info[1]))
+            #print(str(self.posX) + " " + str(info[1]))
             
             self.engine.executeChangesNow(0.2,0,altitude)
             self.engine.send_movement_command_YAW(self.posX)
