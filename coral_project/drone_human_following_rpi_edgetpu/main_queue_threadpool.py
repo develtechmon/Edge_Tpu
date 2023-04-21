@@ -20,6 +20,8 @@ altitude = 1.3
 pid      = [0.5,0.4]
 #pid      = [0.3,0.1
 
+executor = ThreadPoolExecutor(12)
+
 def takeoff():
     drone.control_tab.armAndTakeoff(altitude)
     state.set_system_state("search")
@@ -85,7 +87,7 @@ if __name__ == "__main__":
     state.set_system_state("takeoff")
     state.set_airborne("off")
     
-    executor = ThreadPoolExecutor(12)
+    #executor = ThreadPoolExecutor(12)
 
     while drone.is_active:
         try:
@@ -102,19 +104,19 @@ if __name__ == "__main__":
             if (state.get_system_state() == "takeoff"):
                 off = executor.submit(takeoff)
             
-            elif(state.get_system_state() == "search"):
+            if(state.get_system_state() == "search"):
                 sea = executor.submit(search,id)
                 
-            elif(state.get_system_state() == "track"):
+            if(state.get_system_state() == "track"):
                 tra = executor.submit(track,info)
                         
-            elif(state.get_system_state() == "land"):
+            if(state.get_system_state() == "land"):
                 drone.control_tab.land()
                 #cv2.destroyAllWindows()
 
                 frame_queue.put(None)
 
-            elif(state.get_system_state() == "end"):
+            if(state.get_system_state() == "end"):
                 state.set_system_state("takeoff")
                 state.set_airborne("off")
                 
@@ -126,7 +128,7 @@ if __name__ == "__main__":
                 rec = threading.Thread(target=write_video, args=(frame_queue,))
                 rec.start()
 
-            frame_queue.put(img)
+            frame_queue.put(frame)
 
             cv2.imshow("Capture",frame)
             

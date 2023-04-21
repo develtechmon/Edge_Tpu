@@ -8,11 +8,11 @@ from time import sleep
 from datetime import datetime
 
 import threading
-import queue
 
 import state
 import cv2
 import os
+import queue
 
 pError   = 0
 altitude = 1.3
@@ -110,10 +110,9 @@ if __name__ == "__main__":
                 tra.start()
                         
             elif(state.get_system_state() == "land"):
+                frame_queue.put(None)
                 drone.control_tab.land()
                 #cv2.destroyAllWindows()
-
-                frame_queue.put(None)
                 
             elif(state.get_system_state() == "end"):
                 state.set_system_state("takeoff")
@@ -127,7 +126,7 @@ if __name__ == "__main__":
                 rec = threading.Thread(target=write_video, args=(frame_queue,))
                 rec.start()
 
-            frame_queue.put(img)
+            frame_queue.put(frame)
                         
             cv2.imshow("Capture",frame)
 
