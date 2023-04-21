@@ -100,8 +100,8 @@ class Detect():
                 myobjectlistArea = np.append(myobjectlistArea,area)
                 myobjectlistC = np.append(myobjectlistC,[cx,cy])
                 
-                print("Area >> ", myobjectlistArea)
-                print("Cx,Cy >> ", myobjectlistC)
+                #print("Area >> ", myobjectlistArea)
+                #print("Cx,Cy >> ", myobjectlistC)
 
                 # Using List
                 #myobjectlistArea.append(area)
@@ -113,7 +113,7 @@ class Detect():
                 #if len(myobjectlistArea) !=0 and myobjectlistC != None:
                 if len(myobjectlistArea) !=0:
                     if self.object_name == 'person':
-                        print(self.object_name)
+                        #print(self.object_name)
                         
                         state.set_visualise_state("draw")
                         cv2.rectangle(self.frame, (xmin,ymin), (xmax,ymax), (10, 255, 0), 2)
@@ -126,10 +126,17 @@ class Detect():
                         
                         # Using Numpy
                         i = np.argmax(myobjectlistArea)
-                        print(">> ",i)
-                        print(">> ", [[myobjectlistC[i],myobjectlistC[i+1]],myobjectlistArea[i]]) 
+                        #print(">> ",i)
+                        #print(">> ", [[myobjectlistC[i],myobjectlistC[i+1]],myobjectlistArea[i]]) 
                         
-                        return (self.frame,self.object_name,[[myobjectlistC[i], myobjectlistC[i+1]], myobjectlistArea[i]])
+                        info = ([myobjectlistC, myobjectlistArea])
+                        print("\ninfo >> ", info[0])
+                        print("Cx >> ", info[0][0])
+                        print("Cy >> ", info[0][1])
+                        print("Area >> ", info[1])
+                        
+                        return (self.frame,self.object_name,[myobjectlistC, myobjectlistArea])
+                        #return (self.frame,self.object_name,[[myobjectlistC[i], myobjectlistC[i+1]], myobjectlistArea[i]])
 
                         # Using List
                         #i = myobjectlistArea.index(max(myobjectlistArea))

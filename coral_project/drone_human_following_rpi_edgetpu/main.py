@@ -82,21 +82,21 @@ if __name__ == "__main__":
                 off = threading.Thread(target=takeoff, daemon=True)
                 off.start()
             
-            if(state.get_system_state() == "search"):
+            elif(state.get_system_state() == "search"):
                 sea = threading.Thread(target=search, daemon=True, args=(id,))
                 sea.start()
                 
-            if(state.get_system_state() == "track"):
+            elif(state.get_system_state() == "track"):
                 tra = threading.Thread(target=track, daemon=True, args=(info,))
                 tra.start()
                         
-            if(state.get_system_state() == "land"):
+            elif(state.get_system_state() == "land"):
                 drone.control_tab.land()
                 #cv2.destroyAllWindows()
                 
                 writer.release()
 
-            if(state.get_system_state() == "end"):
+            elif(state.get_system_state() == "end"):
                 state.set_system_state("takeoff")
                 state.set_airborne("off")
                 

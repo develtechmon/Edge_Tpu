@@ -87,8 +87,6 @@ if __name__ == "__main__":
     state.set_system_state("takeoff")
     state.set_airborne("off")
     
-    #executor = ThreadPoolExecutor(12)
-
     while drone.is_active:
         try:
             cap = cam.read()
@@ -104,19 +102,18 @@ if __name__ == "__main__":
             if (state.get_system_state() == "takeoff"):
                 off = executor.submit(takeoff)
             
-            if(state.get_system_state() == "search"):
+            elif(state.get_system_state() == "search"):
                 sea = executor.submit(search,id)
                 
-            if(state.get_system_state() == "track"):
+            elif(state.get_system_state() == "track"):
                 tra = executor.submit(track,info)
                         
-            if(state.get_system_state() == "land"):
+            elif(state.get_system_state() == "land"):
+                frame_queue.put(None)
                 drone.control_tab.land()
                 #cv2.destroyAllWindows()
 
-                frame_queue.put(None)
-
-            if(state.get_system_state() == "end"):
+            elif(state.get_system_state() == "end"):
                 state.set_system_state("takeoff")
                 state.set_airborne("off")
                 
@@ -143,5 +140,6 @@ if __name__ == "__main__":
     frame_queue.put(None)
     
     rec.join()
+    executor.shutdown()
     cv2.destroyAllWindows()
     
