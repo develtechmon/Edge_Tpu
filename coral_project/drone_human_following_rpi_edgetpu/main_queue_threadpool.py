@@ -139,6 +139,7 @@ if __name__ == "__main__":
             
     # Add a None to the queue to signal the end of the video
     frame_queue.put(None)
-
+    
+    rec.join()
     cv2.destroyAllWindows()
     
