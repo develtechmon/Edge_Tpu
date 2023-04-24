@@ -22,7 +22,7 @@ class Track:
             self.posXC  = (self.pid[0]*error + self.pid[1]*(error-self.pError))
             #self.posX   = (np.interp(self.posXC, [-self.w//4, self.w//4], [-15,15]))
 
-            self.posX   = (np.clip(self.posXC, -15,15))
+            self.posX   = (np.clip(self.posXC, -10,10))
 	    
             self.pError = error
             
