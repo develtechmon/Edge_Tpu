@@ -22,7 +22,7 @@ class Distance(threading.Thread):
             while True:
                 time.sleep(0.1)
                 curTime = time.time()
-                if (self.vl53.range * 0.1 < 780) and (state.get_airborne() == "on"):
+                if (self.vl53.range * 0.1 < 800) and (state.get_airborne() == "on"):
                     self.engine.executeChangesNow(-0.2,0,self.altitude)
                     self.engine.send_movement_command_YAW(0)
 

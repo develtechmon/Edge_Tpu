@@ -70,13 +70,15 @@ class Detect():
         classes = self.interpreter.get_tensor(self.output_details[1]['index'])[0] # Class index of detected objects
         scores = self.interpreter.get_tensor(self.output_details[2]['index'])[0] # Confidence of detected objects
         #num = interpreter.get_tensor(output_details[3]['index'])[0]  # Total number of detected objects (inaccurate and not needed)
-
-        myobjectlistC = []
-        myobjectlistArea = []
         
-        #myobjectlistC = np.zeros((2,2))
-        #myobjectlistArea = np.zeros((2,2))
-
+        # List
+        #myobjectlistC = []
+        #myobjectlistArea = []
+        
+        # Numpy
+        myobjectlistC = np.array([])
+        myobjectlistArea = np.array([])
+        
         for i in range(len(scores)):
             if ((scores[i] > self.min_conf_threshold) and (scores[i] <= 1.0)):
 
@@ -99,9 +101,6 @@ class Detect():
                 # Using Numpy
                 myobjectlistArea = np.append(myobjectlistArea,area)
                 myobjectlistC = np.append(myobjectlistC,[cx,cy])
-                
-                #print("Area >> ", myobjectlistArea)
-                #print("Cx,Cy >> ", myobjectlistC)
 
                 # Using List
                 #myobjectlistArea.append(area)
@@ -113,7 +112,6 @@ class Detect():
                 #if len(myobjectlistArea) !=0 and myobjectlistC != None:
                 if len(myobjectlistArea) !=0:
                     if self.object_name == 'person':
-                        #print(self.object_name)
                         
                         state.set_visualise_state("draw")
                         cv2.rectangle(self.frame, (xmin,ymin), (xmax,ymax), (10, 255, 0), 2)
@@ -130,21 +128,21 @@ class Detect():
                         #print(">> ", [[myobjectlistC[i],myobjectlistC[i+1]],myobjectlistArea[i]]) 
                         
                         info = ([myobjectlistC, myobjectlistArea])
-                        print("\ninfo >> ", info[0])
+                        print("\ninfo >> ", info)
+                        print("First index >> ", info[0])
                         print("Cx >> ", info[0][0])
                         print("Cy >> ", info[0][1])
                         print("Area >> ", info[1])
                         
-                        return (self.frame,self.object_name,[myobjectlistC, myobjectlistArea])
-                        #return (self.frame,self.object_name,[[myobjectlistC[i], myobjectlistC[i+1]], myobjectlistArea[i]])
+                        #return (self.frame,self.object_name,[myobjectlistC, myobjectlistArea])
+                        return (self.frame,self.object_name,[[myobjectlistC[i], myobjectlistC[i+1]], myobjectlistArea[i]])
 
                         # Using List
                         #i = myobjectlistArea.index(max(myobjectlistArea))
                         #return self.frame,self.object_name,[myobjectlistC[i],myobjectlistArea[i]]
                 
                 else:
-                    #print("---->> " +  self.object_name)
-                    state.set_visualise_state("nodraw")
+                    #state.set_visualise_state("nodraw")
                     return self.frame,self.object_name,[[0,0],0]
                     
                 #else:
