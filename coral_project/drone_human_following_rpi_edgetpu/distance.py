@@ -24,6 +24,7 @@ class Distance(threading.Thread):
                 curTime = time.time()
                 if (self.vl53.range * 0.1 < 780) and (state.get_airborne() == "on"):
                     self.engine.executeChangesNow(-0.2,0,self.altitude)
-                    
+                    self.engine.send_movement_command_YAW(0)
+
                 #print("Range: {0}mm ({1:.2f}ms)".format(self.vl53.range * 0.1, time.time() - curTime))
         
