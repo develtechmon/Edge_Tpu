@@ -22,16 +22,18 @@ class Cores:
     def track(self,info):
         if (info[1]) != 0:
             state.set_airborne("on")
-            self.det.track.trackobject(info,self.pid,self.pError,self.altitude)
+            self.det.track.trackobject(info,self.pid,self.perror,self.altitude)
       
         else:
             state.set_system_state("search")
 
-    def run(self,id,info,drone,altitude,det,writer):
+    def run(self,id,info,pid,perror,drone,altitude,det,writer):
         self.drone = drone
         self.altitude = altitude
         self.det = det
         self.writer = writer
+        self.pid = pid
+        self.perror = perror
 
         if (state.get_system_state() == "takeoff"):
             off = threading.Thread(target=self.takeoff, daemon=True)

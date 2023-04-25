@@ -55,7 +55,7 @@ if __name__ == "__main__":
             
             det.track.visualise(img,info)
 
-            core.run(id,info,drone,altitude,det,writer)
+            core.run(id,info,pid,pError,drone,altitude,det,writer)
                                                                             
             cv2.imshow("Capture",frame)
             writer.write(frame)
