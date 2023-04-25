@@ -33,7 +33,8 @@ def search(id):
     state.set_system_state("land")
     
 def track(info):
-    if (info[1]) != 0:
+    #if (info[1]) != 0:
+    if (info) != 0:
         state.set_airborne("on")
         det.track.trackobject(info,pid,pError,altitude)
       

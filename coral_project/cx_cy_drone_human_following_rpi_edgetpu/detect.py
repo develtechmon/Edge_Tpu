@@ -122,30 +122,28 @@ class Detect():
                         cv2.rectangle(self.frame, (xmin, label_ymin-labelSize[1]-10), (xmin+labelSize[0], label_ymin+baseLine-10), (255, 255, 255), cv2.FILLED) # Draw white box to put label text in
                         cv2.putText(self.frame, "Lukas", (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2) # Draw label text
                         
-                        # Using Numpy
-                        i = np.argmax(myobjectlistArea)
-                        #print(">> ",i)
-                        #print(">> ", [[myobjectlistC[i],myobjectlistC[i+1]],myobjectlistArea[i]]) 
-                        
                         info = ([myobjectlistC, myobjectlistArea])
+
                         print("\ninfo >> ", info)
                         print("First index >> ", info[0])
                         print("Cx >> ", info[0][0])
                         print("Cy >> ", info[0][1])
                         print("Area >> ", info[1])
                         
-                        #return (self.frame,self.object_name,[myobjectlistC, myobjectlistArea])
-                        #return (self.frame,self.object_name,[[myobjectlistC[i], myobjectlistC[i+1]], myobjectlistArea[i]])
-                        return (self.frame,self.object_name,cx)
-
                         # Using List
                         #i = myobjectlistArea.index(max(myobjectlistArea))
                         #return self.frame,self.object_name,[myobjectlistC[i],myobjectlistArea[i]]
                 
+                        # Using Numpy
+                        #i = np.argmax(myobjectlistArea)
+                        #return (self.frame,self.object_name,[[myobjectlistC[i], myobjectlistC[i+1]], myobjectlistArea[i]])
+                        
+                        # Cx Only
+                        return (self.frame,self.object_name,cx)
+
                 else:
                     #state.set_visualise_state("nodraw")
-                    return self.frame,self.object_name,[[0,0],0]
+                    #return self.frame,self.object_name,[[0,0],0]
+                    return (self.frame,self.object_name,0)
                     
-                #else:
-                #    return self.frame,self.object_name,[[0,0],0]
 
