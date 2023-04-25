@@ -1,5 +1,6 @@
 import cv2
-from time import sleep,time
+import time
+from time import sleep
 from datetime import datetime
 
 def write_video(frame_queue):
