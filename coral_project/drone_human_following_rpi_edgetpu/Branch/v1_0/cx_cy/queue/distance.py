@@ -20,10 +20,10 @@ class Distance(threading.Thread):
     def run(self):
         with self.vl53.continuous_mode():
             while True:
-                time.sleep(0.1)
+                #time.sleep(0.1)
                 curTime = time.time()
                 if (self.vl53.range * 0.1 < 800) and (state.get_airborne() == "on"):
-                    self.engine.executeChangesNow(-0.2,0,self.altitude)
+                    self.engine.executeChangesNow(-0.4,0,self.altitude)
                     self.engine.send_movement_command_YAW(0)
 
                 #print("Range: {0}mm ({1:.2f}ms)".format(self.vl53.range * 0.1, time.time() - curTime))
