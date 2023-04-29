@@ -288,4 +288,4 @@ while True:
     
 # Clean up
 cv2.destroyAllWindows()
-videostream.stop()
+#videostream.stop()
