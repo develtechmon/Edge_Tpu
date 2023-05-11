@@ -112,7 +112,7 @@ if __name__ == "__main__":
 
             frame_queue.put(frame)
                         
-            cv2.imshow("Capture",frame)
+            #cv2.imshow("Capture",frame)
 
             if cv2.waitKey(1) & 0XFF == ord('q'):
                break
@@ -129,5 +129,5 @@ if __name__ == "__main__":
     sea.join()
     tra.join()
 
-    cv2.destroyAllWindows()
+    #cv2.destroyAllWindows()
     
