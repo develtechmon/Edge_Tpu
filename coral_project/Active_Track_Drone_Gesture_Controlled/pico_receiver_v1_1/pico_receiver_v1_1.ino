@@ -8,6 +8,11 @@ const byte address[6] = "00001";
 char receivedData[32] = "";
 int xAxis, yAxis, Zaxis;
 
+int guided_flag = 0;
+int land_flag = 0;
+int takeoff_flag = 0;
+int guided_onetime = 0;
+int land_onetime = 0;
 // struct Received_data {
 //   char ch1;
 
@@ -37,10 +42,35 @@ void receive_the_data()
     byte Array[6];
     radio.read(&Array, sizeof(Array));
     
-    Serial.println(Array[0]);
-    Serial.println(Array[1])
-    Serial.println(Array[3]);
-    
+    //Serial.println(Array[3]);
+
+    for (int i = 0; i < 6; i++)
+    {
+    // Serial.println(Array[i]);
+
+
+    if (Array[1] == 1 && land_flag==0){
+      Serial.println('l');
+      guided_flag = 1;
+      // guided_onetime = 0;
+    }
+
+     if (Array[0] == 1 && guided_flag==1)
+    {
+          Serial.println('g');
+          takeoff_flag = 1;
+
+          if (takeoff_flag == 1){
+          Serial.println(Array[3]);
+          // land_flag = 0;
+        }
+    }
+
+  // if (land_flag == 1 && takeoff_flag == 1 && Array[1] == 0){
+  //   Serial.println(Array[3]);
+  //     land_flag = 0;
+  //   }
+    } 
     //radio.read(&received_data, sizeof(Received_data));
     last_Time = millis();
   }

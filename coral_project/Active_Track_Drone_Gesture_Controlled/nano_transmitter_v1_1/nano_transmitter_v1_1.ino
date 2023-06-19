@@ -81,7 +81,16 @@ void loop() {
   Serial.print("  ");
 
   Serial.print("Pitch P = ");
-  Serial.println(y_axis);
+  Serial.print(y_axis);
+  Serial.print("  ");
+
+  // Serial.print("Yaw Left = ");
+  // Serial.print(yaw_left);
+  // Serial.print("  ");
+
+  // Serial.print("Yaw Right = ");
+  // Serial.print(yaw_right);
+  // Serial.println("  ");
 
   if (x_axis < 50){
     Serial.print("Move Right");
@@ -113,17 +122,9 @@ void loop() {
     Array[3] = 'x';
   }
 
+
   radio.write(&Array, sizeof(Array));
 
   delay(50);
 
-//  while (Serial.available() > 0)
-//     {
-//       c =Serial.read();
-//       Serial.println(c);
-//       sent_data.ch1 = c;
-//    }
-
-// radio.write(&sent_data, sizeof(Data_to_be_sent));
-// Serial.println(sent_data.ch1);
 }

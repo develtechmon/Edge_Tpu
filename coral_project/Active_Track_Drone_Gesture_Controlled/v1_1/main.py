@@ -7,6 +7,7 @@ altitude = 1.3
 
 def guided_mode():
     drone.control_tab.guided()
+    up_mode()
     
 def up_mode():
     drone.control_tab.armAndTakeoff(altitude)
@@ -94,11 +95,11 @@ if __name__ == "__main__":
                         guide = threading.Thread(target=guided_mode, daemon=True)
                         guide.start()
             
-                elif (receivedata == 'u'):
-                    mode_u += 1
-                    if mode_u < 2:
-                        up = threading.Thread(target=up_mode, daemon=True)
-                        up.start()
+                #elif (receivedata == 'u'):
+                #    mode_u += 1
+                #    if mode_u < 2:
+                #        up = threading.Thread(target=up_mode, daemon=True)
+                #        up.start()
             
                 elif (receivedata == '100'): #d
                     mode_d += 1
