@@ -77,7 +77,7 @@ if __name__ == "__main__":
     """use usb connection port connect to Arduino"""
     #ser = init.initConnection("/dev/ttyUSB0", 9600)
     #ser = init.initConnection("COM14", 115200)
-    ser = init.initConnection("/dev/ttyACM0", 115200)
+    ser = init.initConnection("/dev/ttyACM0", 57600)
 
     while True:
         receivedata = init.getData(ser)
@@ -85,4 +85,6 @@ if __name__ == "__main__":
         if receivedata != None:
             print(receivedata)
             #vals = init.getKeyboardInput(receivedata)
+            #sleep(0.25)
+        
 

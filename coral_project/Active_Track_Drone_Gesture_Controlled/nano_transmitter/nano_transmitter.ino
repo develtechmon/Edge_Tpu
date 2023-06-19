@@ -18,7 +18,7 @@ struct Data_to_be_sent {
 Data_to_be_sent sent_data;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(57600);
 //   while (!Serial) {
 //  }
   radio.begin();

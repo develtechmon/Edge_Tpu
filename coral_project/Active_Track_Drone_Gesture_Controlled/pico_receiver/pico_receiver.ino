@@ -16,7 +16,7 @@ Received_data received_data;
 char ch1_value;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(57600);
   radio.begin();
   radio.setAutoAck(false);
   radio.setPALevel(RF24_PA_MIN);
