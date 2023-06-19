@@ -100,7 +100,7 @@ if __name__ == "__main__":
                         up = threading.Thread(target=up_mode, daemon=True)
                         up.start()
             
-                elif (receivedata == 'd'):
+                elif (receivedata == '100'): #d
                     mode_d += 1
                     if mode_d < 2:
                         right = threading.Thread(target=right_mode, daemon=True)
@@ -115,7 +115,7 @@ if __name__ == "__main__":
                         mode_l = 0
                         mode_x = 0
             
-                elif (receivedata == 'a'):
+                elif (receivedata == '97'): #a
                     mode_a += 1
                     if mode_a < 2:   
                         left = threading.Thread(target=left_mode, daemon=True)
@@ -130,7 +130,7 @@ if __name__ == "__main__":
                         mode_l = 0
                         mode_x = 0
             
-                elif (receivedata == 'w'):
+                elif (receivedata == '119'): # w
                     mode_w += 1
                     if mode_w < 2:
                         forward = threading.Thread(target=forward_mode, daemon=True)
@@ -145,7 +145,7 @@ if __name__ == "__main__":
                         mode_l = 0
                         mode_x = 0
             
-                elif (receivedata == 's'):
+                elif (receivedata == '115'): #s
                     mode_s += 1
                     if mode_s < 2:
                         back = threading.Thread(target=back_mode, daemon=True)
@@ -207,7 +207,7 @@ if __name__ == "__main__":
                         mode_e = 0
                         mode_x = 0
             
-                elif (receivedata == 'x'):
+                elif (receivedata == '120'): # x
                     mode_x += 1
                     if mode_x < 2:
                         stop = threading.Thread(target=stop_mode, daemon=True)
