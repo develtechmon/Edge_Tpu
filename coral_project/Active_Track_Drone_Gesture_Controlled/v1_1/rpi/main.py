@@ -11,7 +11,8 @@ def guided_mode():
     
 def up_mode():
     drone.control_tab.armAndTakeoff(altitude)
-
+    #drone.control_tab.armAndTakeoff_nogps(altitude)
+    
 def yawleft_mode():
     drone.control_tab.yaw_left()
 
@@ -26,16 +27,18 @@ def right_mode():
 
 def forward_mode():
     drone.control_tab.forward()
+    #drone.control_tab.forward_no_gps()
 
 def back_mode():
     drone.control_tab.back()
-    
+    #drone.control_tab.backward_no_gps()
+
 def stop_mode():
     drone.control_tab.stop_drone()
 
 def land_mode():
     drone.control_tab.land()
-
+    
 # Connect to Pico
 def initConnection(portNo, baudRate):
     try:
@@ -87,7 +90,7 @@ if __name__ == "__main__":
             receivedata = getData(ser)
             
             if receivedata != None:
-                print(receivedata)
+                #print(receivedata)
                 
                 if (receivedata == 'g'):
                     mode_g += 1

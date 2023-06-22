@@ -14,17 +14,18 @@ class controlTab:
         
         self.inputValueYaw = 0
         
-        self.MAX_SPEED = 4       # M / s
+        self.MAX_SPEED = 4     
         self.MAX_YAW = 15  
           
         self.takeoff_alt = 1.3
-    
+            
     # Takeoff without GPS
     def armAndTakeoff_nogps(self,altitude):
         ## Constant ##
         DEFAULT_TAKEOFF_THRUST = 0.7
         SMOOTH_TAKEOFF_THRUST = 0.6
         
+        mode_a = 0
         print("Basic pre-arm checks")
         # Don't let the user try to arm until autopilot is ready
         # If you need to disable the arming check,
@@ -48,13 +49,16 @@ class controlTab:
         while True:
             current_altitude = self.vehicle.location.global_relative_frame.alt
             print(" Altitude: %f  Desired: %f" %(current_altitude, altitude))
-            if current_altitude >= altitude*0.95: # Trigger just below target alt.
+            if (current_altitude >= altitude*0.95 and mode_a==0 ): # Trigger just below target alt.
                 print("Reached target altitude")
+                mode_a = 1
                 break
+                        
             elif current_altitude >= altitude*0.6:
-                thrust = SMOOTH_TAKEOFF_THRUST
+               thrust = SMOOTH_TAKEOFF_THRUST
+            
             self.set_attitude(thrust = thrust)
-            time.sleep(0.2)
+            time.sleep(0.1)
 
     def send_attitude_target(self, roll_angle = 0.0, pitch_angle = 0.0,yaw_angle = None, yaw_rate = 0.0, use_yaw_rate = False,thrust = 0.5):
         """
@@ -70,7 +74,7 @@ class controlTab:
         # Thrust >  0.5: Ascend
         # Thrust == 0.5: Hold the altitude
         # Thrust <  0.5: Descend
-        msg = self.vehicle.message_factory.set_attitude_target_encode(
+        self.msg = self.vehicle.message_factory.set_attitude_target_encode(
             0, # time_boot_ms
             1, # Target system
             1, # Target component
@@ -81,9 +85,8 @@ class controlTab:
             math.radians(yaw_rate), # Body yaw rate in radian/second
             thrust  # Thrust
         )
-        self.vehicle.send_mavlink(msg)
-        
-                
+        self.vehicle.send_mavlink(self.msg)
+                 
     def set_attitude(self,roll_angle = 0.0, pitch_angle = 0.0, yaw_angle = None, yaw_rate = 0.0, use_yaw_rate = False,thrust = 0.5, duration = 0):
         self.send_attitude_target(roll_angle, pitch_angle,yaw_angle, yaw_rate, False, thrust) 
         
@@ -91,9 +94,10 @@ class controlTab:
         while time.time() - start < duration:
             self.send_attitude_target(roll_angle, pitch_angle, yaw_angle, yaw_rate, False,thrust)
             time.sleep(0.1)
-            # Reset attitude, or it will persist for 1s more due to the timeout
-            self.send_attitude_target(0, 0,0, 0, True,thrust)
-
+        
+        # Reset attitude, or it will persist for 1s more due to the timeout
+        self.send_attitude_target(0, 0,0, 0, True,thrust)
+    
     def to_quaternion(self,roll = 0.0, pitch = 0.0, yaw = 0.0):
         """
         Convert degrees to quaternions
@@ -109,9 +113,15 @@ class controlTab:
         x = t0 * t3 * t4 - t1 * t2 * t5
         y = t0 * t2 * t5 + t1 * t3 * t4
         z = t1 * t2 * t4 - t0 * t3 * t5
-
+        
         return [w, x, y, z]
-     
+    
+    def forward_no_gps(self):
+        self.set_attitude(pitch_angle = -5, thrust = 0.5, duration = 3.21)
+
+    def backward_no_gps(self):
+        self.set_attitude(pitch_angle = 5, thrust = 0.5, duration = 3)
+        
     # Takeoff with GPS
     def armAndTakeoff(self,altitude):
         print("Setting ground speed to 3")
@@ -204,6 +214,7 @@ class controlTab:
         self.vehicle.mode = VehicleMode("RTL")
         
     def stop_drone(self):
+        print("Stop Drone")
         self.engine.executeChangesNow(0, 0, self.takeoff_alt)
         self.engine.send_movement_command_YAW(0)
         
