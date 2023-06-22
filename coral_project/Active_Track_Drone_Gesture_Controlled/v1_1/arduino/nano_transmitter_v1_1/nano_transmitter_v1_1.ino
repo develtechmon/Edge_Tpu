@@ -10,9 +10,14 @@ MPU6050 mpu;
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
 
+
+// Define Joystick Pin
+int xValue = 0 ;
+int bValue = 0 ;
+
 //Declare pin state
 byte Array[6];
-#define stabilize 2
+#define land 2
 #define guided 3
 
 //Declare pin state
@@ -35,8 +40,11 @@ void setup() {
 
   Wire.begin();
 
-  pinMode(stabilize, INPUT_PULLUP);
+  pinMode(land, INPUT_PULLUP);
   pinMode(guided, INPUT_PULLUP);
+
+  pinMode(6,INPUT); 
+	digitalWrite(6,HIGH);	
   
   mpu.initialize();
 
@@ -53,28 +61,22 @@ void loop() {
 
   mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
 
+  // Read Potentiometer
   int data = analogRead(A0);
   int throttle = map(data,0,1023,2046,1050);
   
-  Array[0] = digitalRead(stabilize);
-  Array[1] = digitalRead(guided);
-  Array[2] = throttle;
-  //Array[2] = analogRead(A0);
+  //Joystick Parameter
+  xValue = analogRead(A1);	
+	bValue = digitalRead(8);	
 
-  int x_axis = map(ax, -17000, 17000, 0, 255); //Send X axis data
+  int x_joy_axis = map(xValue, 0, 1023, 0, 255); //Send X Joystick axis data
+
+  //Accelerometer and Gyroscope
+  int x_axis = map(ax, -17000, 17000, 0, 255);  //Send X axis data
   int y_axis = map(ay, -17000, 17000, 0, 255);  //Send Y axis data
-
-   // Serial.print("Arm A = ");
-  // Serial.print(Array[0]);
-  // Serial.print("  ");
-
-  // Serial.print("Disarm D = ");
-  // Serial.print(Array[1]);
-  // Serial.print("  ");
-
-  // Serial.print("Throttle T = ");
-  // Serial.print(Array[2]);
-  // Serial.print("  ");
+	  
+  Array[0] = digitalRead(land);
+  Array[1] = digitalRead(guided);
 
   Serial.print("Roll R = ");
   Serial.print(x_axis);
@@ -84,13 +86,13 @@ void loop() {
   Serial.print(y_axis);
   Serial.print("  ");
 
-  // Serial.print("Yaw Left = ");
-  // Serial.print(yaw_left);
-  // Serial.print("  ");
+  Serial.print("Yaw Left = ");
+  Serial.print(x_joy_axis);
+  Serial.print("  ");
 
-  // Serial.print("Yaw Right = ");
-  // Serial.print(yaw_right);
-  // Serial.println("  ");
+  Serial.print("Yaw Right = ");
+  Serial.print(x_joy_axis);
+  Serial.println("  ");
 
   if (x_axis < 50){
     Serial.print("Move Right");
@@ -115,6 +117,19 @@ void loop() {
     Serial.println("  ");
     Array[3] = 's';
   }
+
+  else if (x_joy_axis < 30){
+    Serial.print("Yaw Left");
+    Serial.println(" ");
+    Array[3] = 'yl';
+  }
+
+  else if (x_joy_axis > 230){
+    Serial.print("Yaw Right");
+    Serial.println(" ");
+    Array[3] = 'yr';
+  }
+
 
   else {
     Serial.println("Center");

@@ -193,13 +193,13 @@ class controlTab:
     
     def yaw_left(self):
         print("Yaw Left")
-        self.yaw = -25
+        self.yaw = -40
         self.engine.executeChangesNow(0, 0,self.takeoff_alt)
         self.engine.send_movement_command_YAW(self.yaw)
     
     def yaw_right(self):
         print("Yaw Right")
-        self.yaw = 25
+        self.yaw = 40
         self.engine.executeChangesNow(0, 0,self.takeoff_alt)
         self.engine.send_movement_command_YAW(self.yaw)
            

@@ -90,7 +90,7 @@ if __name__ == "__main__":
             receivedata = getData(ser)
             
             if receivedata != None:
-                #print(receivedata)
+                print(receivedata)
                 
                 if (receivedata == 'g'):
                     mode_g += 1
@@ -164,7 +164,7 @@ if __name__ == "__main__":
                         mode_l = 0
                         mode_x = 0
                         
-                elif (receivedata == 'q'):
+                elif (receivedata == '108'): #q
                     mode_q += 1
                     if mode_q < 2:
                         print("Yaw Left")
@@ -180,7 +180,7 @@ if __name__ == "__main__":
                         mode_l = 0
                         mode_x = 0
                         
-                elif (receivedata == 'e'):
+                elif (receivedata == '114'): #e
                     mode_e += 1
                     if mode_e < 2:
                         print("Yaw Right")
