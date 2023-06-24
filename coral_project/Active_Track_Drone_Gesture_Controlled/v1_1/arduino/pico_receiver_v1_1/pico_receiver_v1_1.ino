@@ -13,14 +13,6 @@ int land_flag = 0;
 int takeoff_flag = 0;
 int guided_onetime = 0;
 int land_onetime = 0;
-// struct Received_data {
-//   char ch1;
-
-// };
-
-// Received_data received_data;
-
-// char ch1_value;
 
 void setup() {
   Serial.begin(57600);
@@ -66,10 +58,6 @@ void receive_the_data()
         }
     }
 
-  // if (land_flag == 1 && takeoff_flag == 1 && Array[1] == 0){
-  //   Serial.println(Array[3]);
-  //     land_flag = 0;
-  //   }
     } 
     //radio.read(&received_data, sizeof(Received_data));
     last_Time = millis();

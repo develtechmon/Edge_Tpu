@@ -10,7 +10,6 @@ MPU6050 mpu;
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
 
-
 // Define Joystick Pin
 int xValue = 0 ;
 int bValue = 0 ;
@@ -19,21 +18,11 @@ int bValue = 0 ;
 byte Array[6];
 #define land 2
 #define guided 3
-
-//Declare pin state
-char c;
+#define yaw 6
 
 RF24 radio(7, 8); // CE, CSN // nano
 
 const byte address[6] = "00001";
-
-//Create a struct that do not exceed 32 bytes
-struct Data_to_be_sent {
-  char ch1;
-  //byte ch2;
-};
-
-Data_to_be_sent sent_data;
 
 void setup() {
   Serial.begin(57600);
@@ -42,6 +31,7 @@ void setup() {
 
   pinMode(land, INPUT_PULLUP);
   pinMode(guided, INPUT_PULLUP);
+  pinMode(yaw, INPUT_PULLUP);
 
   pinMode(6,INPUT); 
 	digitalWrite(6,HIGH);	
@@ -54,7 +44,6 @@ void setup() {
   radio.setDataRate(RF24_250KBPS);
   radio.openWritingPipe(address);
   radio.stopListening();  
-
 }
 
 void loop() {
@@ -77,22 +66,7 @@ void loop() {
 	  
   Array[0] = digitalRead(land);
   Array[1] = digitalRead(guided);
-
-  Serial.print("Roll R = ");
-  Serial.print(x_axis);
-  Serial.print("  ");
-
-  Serial.print("Pitch P = ");
-  Serial.print(y_axis);
-  Serial.print("  ");
-
-  Serial.print("Yaw Left = ");
-  Serial.print(x_joy_axis);
-  Serial.print("  ");
-
-  Serial.print("Yaw Right = ");
-  Serial.print(x_joy_axis);
-  Serial.println("  ");
+  Array[2] = digitalRead(yaw);
 
   if (x_axis < 50){
     Serial.print("Move Right");
@@ -130,13 +104,30 @@ void loop() {
     Array[3] = 'yr';
   }
 
-
   else {
     Serial.println("Center");
-    // Array[4] = 'x';
     Array[3] = 'x';
   }
 
+  Serial.print("Roll R = ");
+  Serial.print(x_axis);
+  Serial.print("  ");
+
+  Serial.print("Pitch P = ");
+  Serial.print(y_axis);
+  Serial.print("  ");
+
+  Serial.print("Yaw Left = ");
+  Serial.print(x_joy_axis);
+  Serial.print("  ");
+
+  Serial.print("Yaw Right = ");
+  Serial.print(x_joy_axis);
+  Serial.print("  ");
+
+  Serial.print("Yaw Switch = ");
+  Serial.print(Array[2]);
+  Serial.println("  ");
 
   radio.write(&Array, sizeof(Array));
 
