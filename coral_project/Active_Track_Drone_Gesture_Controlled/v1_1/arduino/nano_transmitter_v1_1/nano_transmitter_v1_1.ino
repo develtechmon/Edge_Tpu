@@ -17,8 +17,8 @@ int bValue = 0 ;
 //Declare pin state
 byte Array[6];
 #define land 2
-#define guided 3
-#define yaw 6
+#define land_guide_switch 3
+#define yaw_switch 6
 
 RF24 radio(7, 8); // CE, CSN // nano
 
@@ -30,11 +30,11 @@ void setup() {
   Wire.begin();
 
   pinMode(land, INPUT_PULLUP);
-  pinMode(guided, INPUT_PULLUP);
-  pinMode(yaw, INPUT_PULLUP);
+  pinMode(land_guide_switch, INPUT_PULLUP);
+  pinMode(yaw_switch, INPUT_PULLUP);
 
-  pinMode(6,INPUT); 
-	digitalWrite(6,HIGH);	
+  //pinMode(6,INPUT); 
+	//digitalWrite(6,HIGH);	
   
   mpu.initialize();
 
@@ -65,40 +65,54 @@ void loop() {
   int y_axis = map(ay, -17000, 17000, 0, 255);  //Send Y axis data
 	  
   Array[0] = digitalRead(land);
-  Array[1] = digitalRead(guided);
-  Array[2] = digitalRead(yaw);
+  Array[1] = digitalRead(land_guide_switch);
+  Array[2] = digitalRead(yaw_switch);    
 
-  if (x_axis < 50){
+  if (x_axis < 50 && Array[1] == 1 && Array[2] == 1){
     Serial.print("Move Right");
     Serial.println("  ");
     Array[3] = 'd';
   }
 
-  else if (x_axis > 200){
+  else if (x_axis > 200 && Array[1] == 1 && Array[2] == 1){
     Serial.print("Move Left");
     Serial.println("  ");
     Array[3] = 'a';
   }
 
-  else if (y_axis < 70){
+  else if (y_axis < 70 && Array[1] == 1 && Array[2] == 1){
     Serial.print("Move Forward");
     Serial.println("  ");
     Array[3] = 'w';
   }
 
-  else if (y_axis > 200){
+  else if (y_axis > 200 && Array[1] == 1 && Array[2] == 1){
     Serial.print("Move Backward");
     Serial.println("  ");
     Array[3] = 's';
   }
 
-  else if (x_joy_axis < 30){
+  // Using Yaw Switch
+  else if (x_axis < 50 && Array[1] == 1 && Array[2] == 0){
+    Serial.print("Yaw Right");
+    Serial.println("  ");
+    Array[3] = 'yr';
+  }
+
+  else if (x_axis > 200 && Array[1] == 1 && Array[2] == 0){
+    Serial.print("Yaw Left");
+    Serial.println("  ");
+    Array[3] = 'yl';
+  }
+
+  // Using Joystick Option
+  else if (x_joy_axis < 30 && Array[1] == 1 && Array[2] == 1){
     Serial.print("Yaw Left");
     Serial.println(" ");
     Array[3] = 'yl';
   }
 
-  else if (x_joy_axis > 230){
+  else if (x_joy_axis > 230 && Array[1] == 1 && Array[2] == 1){
     Serial.print("Yaw Right");
     Serial.println(" ");
     Array[3] = 'yr';
@@ -117,11 +131,11 @@ void loop() {
   Serial.print(y_axis);
   Serial.print("  ");
 
-  Serial.print("Yaw Left = ");
+  Serial.print("Yaw Left Joystick = ");
   Serial.print(x_joy_axis);
   Serial.print("  ");
 
-  Serial.print("Yaw Right = ");
+  Serial.print("Yaw Right Joystick = ");
   Serial.print(x_joy_axis);
   Serial.print("  ");
 
