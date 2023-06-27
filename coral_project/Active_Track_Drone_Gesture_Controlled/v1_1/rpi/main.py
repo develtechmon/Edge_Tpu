@@ -90,8 +90,9 @@ if __name__ == "__main__":
             receivedata = getData(ser)
             
             if receivedata != None:
-                print(receivedata, chr(receivedata))
-                
+                print(receivedata)
+                # print(chr(receivedata))  
+                            
                 if (receivedata == 'g'):
                     mode_g += 1
                     if mode_g < 2:
@@ -107,10 +108,10 @@ if __name__ == "__main__":
                 elif (receivedata == '100'): #d
                     mode_d += 1
                     if mode_d < 2:
-                        print("Move Right")
+                        #print("Move Right")
                         right = threading.Thread(target=right_mode, daemon=True)
                         right.start()
-                        #mode_g = 0
+                        mode_g = 0
                         mode_u = 0
                         mode_a = 0
                         mode_w = 0
@@ -123,11 +124,11 @@ if __name__ == "__main__":
                 elif (receivedata == '97'): #a
                     mode_a += 1
                     if mode_a < 2:   
-                        print("Move Left")
+                        #print("Move Left")
                         left = threading.Thread(target=left_mode, daemon=True)
                         left.start()
                         mode_d = 0
-                        #mode_g = 0
+                        mode_g = 0
                         mode_u = 0
                         mode_w = 0
                         mode_s = 0
@@ -139,11 +140,11 @@ if __name__ == "__main__":
                 elif (receivedata == '119'): # w
                     mode_w += 1
                     if mode_w < 2:
-                        print("Move Forward")
+                        #print("Move Forward")
                         forward = threading.Thread(target=forward_mode, daemon=True)
                         forward.start()
                         mode_s = 0
-                        #mode_g = 0
+                        mode_g = 0
                         mode_u = 0
                         mode_d = 0
                         mode_a = 0
@@ -155,10 +156,10 @@ if __name__ == "__main__":
                 elif (receivedata == '115'): #s
                     mode_s += 1
                     if mode_s < 2:
-                        print("Move Backward")
+                        #print("Move Backward")
                         back = threading.Thread(target=back_mode, daemon=True)
                         back.start()
-                        #mode_g = 0
+                        mode_g = 0
                         mode_u = 0
                         mode_d = 0
                         mode_a = 0
@@ -171,10 +172,10 @@ if __name__ == "__main__":
                 elif (receivedata == '108'): #q
                     mode_q += 1
                     if mode_q < 2:
-                        print("Yaw Left")
+                        #print("Yaw Left")
                         yawleft = threading.Thread(target=yawleft_mode, daemon=True)
                         yawleft.start()
-                        #mode_g = 0
+                        mode_g = 0
                         mode_u = 0
                         mode_d = 0
                         mode_a = 0
@@ -187,10 +188,10 @@ if __name__ == "__main__":
                 elif (receivedata == '114'): #e
                     mode_e += 1
                     if mode_e < 2:
-                        print("Yaw Right")
+                        #print("Yaw Right")
                         yawright = threading.Thread(target=yawright_mode, daemon=True)
                         yawright.start()
-                        #mode_g = 0
+                        mode_g = 0
                         mode_u = 0
                         mode_d = 0
                         mode_a = 0
@@ -203,7 +204,7 @@ if __name__ == "__main__":
                 elif (receivedata == 'l'):
                     mode_l += 1
                     if mode_l < 2:
-                        print("Land")
+                        #print("Land")
                         land = threading.Thread(target=land_mode, daemon=True)
                         land.start()
                         mode_g = 0
@@ -219,10 +220,10 @@ if __name__ == "__main__":
                 elif (receivedata == '120'): # x
                     mode_x += 1
                     if mode_x < 2:
-                        print("Freeze and Hover")
+                        #print("Freeze and Hover")
                         stop = threading.Thread(target=stop_mode, daemon=True)
                         stop.start()
-                        #mode_g = 0
+                        mode_g = 0
                         mode_u = 0
                         mode_d = 0
                         mode_a = 0
