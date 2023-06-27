@@ -67,42 +67,55 @@ void loop() {
   Array[0] = digitalRead(land);
   Array[1] = digitalRead(guide);
   Array[2] = digitalRead(yaw_switch);    
+  Serial.println(x_axis);
 
-  if (x_axis < 50 &&  Array[2] == 1){
-    Serial.print("Move Right");
+  if (x_axis < 60 &&  Array[2] == 1){
+    Serial.print("Move Right"); //move forward - w
     Serial.println("  ");
-    Array[3] = 'd';
+    Array[3] = 'w'; // - original d
   }
 
   else if (x_axis > 200 && Array[2] == 1){
-    Serial.print("Move Left");
+    Serial.print("Move Left"); // move  backward
     Serial.println("  ");
-    Array[3] = 'a';
+    Array[3] = 's'; // - original a
   }
 
   else if (y_axis < 70 && Array[2] == 1){
-    Serial.print("Move Forward");
+    Serial.print("Move Forward"); // move left
     Serial.println("  ");
-    Array[3] = 'w';
+    Array[3] = 'a'; // - original w
   }
 
   else if (y_axis > 200 && Array[2] == 1){
-    Serial.print("Move Backward");
+    Serial.print("Move Backward"); //move right
     Serial.println("  ");
-    Array[3] = 's';
+    Array[3] = 'd'; // - original s
   }
 
   // Using Yaw Switch
-  else if (x_axis < 50 && Array[2] == 0){
-    Serial.print("Yaw Switch Right");
+  else if (y_axis > 200 && Array[2] == 0){ //  else if (x_axis < 50 && Array[2] == 0){
+    Serial.print("Yaw Switch Right"); 
     Serial.println("  ");
     Array[3] = 'yr';
   }
 
-  else if (x_axis > 200 && Array[2] == 0){
+  else if (y_axis < 70 && Array[2] == 0){ // else if (x_axis > 200 && Array[2] == 0){
     Serial.print("Yaw Switch Left");
     Serial.println("  ");
     Array[3] = 'yl';
+  }
+
+  else if (x_axis < 60 &&  Array[2] == 0){
+    Serial.print("Move Right"); //move forward - w
+    Serial.println("  ");
+    Array[3] = 'w'; // - original d
+  }
+
+  else if (x_axis > 200 && Array[2] == 0){
+    Serial.print("Move Left"); // move  backward
+    Serial.println("  ");
+    Array[3] = 's'; // - original a
   }
 
   // Using Joystick Option
