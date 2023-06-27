@@ -18,7 +18,8 @@ class controlTab:
         self.MAX_YAW = 15  
           
         self.takeoff_alt = 1.3
-            
+    
+    ######################################### - START - ###############################################
     # Takeoff without GPS
     def armAndTakeoff_nogps(self,altitude):
         ## Constant ##
@@ -121,7 +122,10 @@ class controlTab:
 
     def backward_no_gps(self):
         self.set_attitude(pitch_angle = 5, thrust = 0.5, duration = 3)
-        
+    
+    ######################################### - END - ###############################################
+
+    ######################################### - START - ###############################################
     # Takeoff with GPS
     def armAndTakeoff(self,altitude):
         print("Setting ground speed to 3")
@@ -160,21 +164,21 @@ class controlTab:
     
     def left(self):
         print("left")
-        self.x,self.y = 0.0,-0.5
+        self.x,self.y = 0.0,-0.7
         self.z = 0
         self.engine.executeChangesNow(self.x,self.y,self.takeoff_alt)
         self.engine.send_movement_command_YAW(0)
     
     def right(self):
         print("Go Right")
-        self.x,self.y=0.0,0.5
+        self.x,self.y=0.0,0.7
         self.z=0
         self.engine.executeChangesNow(self.x,self.y,self.takeoff_alt)
         self.engine.send_movement_command_YAW(0)
         
     def back(self):
         print("Go Back")
-        self.x, self.y = -0.5, 0.0  # meters
+        self.x, self.y = -0.7, 0.0  # meters
         self.z = 0
                     
         # 3rd option
@@ -184,7 +188,7 @@ class controlTab:
     def forward(self):
         # Go Front
         print("Go Front")
-        self.x, self.y = 0.5, 0.0  # meters
+        self.x, self.y = 0.7, 0.0  # meters
         self.z = 0
 
         # 3rd option

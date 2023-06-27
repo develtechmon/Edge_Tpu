@@ -17,7 +17,7 @@ int bValue = 0 ;
 //Declare pin state
 byte Array[6];
 #define land 2
-#define land_guide_switch 3
+#define guide 3
 #define yaw_switch 6
 
 RF24 radio(7, 8); // CE, CSN // nano
@@ -30,7 +30,7 @@ void setup() {
   Wire.begin();
 
   pinMode(land, INPUT_PULLUP);
-  pinMode(land_guide_switch, INPUT_PULLUP);
+  pinMode(guide, INPUT_PULLUP);
   pinMode(yaw_switch, INPUT_PULLUP);
 
   //pinMode(6,INPUT); 
@@ -65,7 +65,7 @@ void loop() {
   int y_axis = map(ay, -17000, 17000, 0, 255);  //Send Y axis data
 	  
   Array[0] = digitalRead(land);
-  Array[1] = digitalRead(land_guide_switch);
+  Array[1] = digitalRead(guide);
   Array[2] = digitalRead(yaw_switch);    
 
   if (x_axis < 50 && Array[1] == 1 && Array[2] == 1){
@@ -94,13 +94,13 @@ void loop() {
 
   // Using Yaw Switch
   else if (x_axis < 50 && Array[1] == 1 && Array[2] == 0){
-    Serial.print("Yaw Right");
+    Serial.print("Yaw Switch Right");
     Serial.println("  ");
     Array[3] = 'yr';
   }
 
   else if (x_axis > 200 && Array[1] == 1 && Array[2] == 0){
-    Serial.print("Yaw Left");
+    Serial.print("Yaw Switch Left");
     Serial.println("  ");
     Array[3] = 'yl';
   }

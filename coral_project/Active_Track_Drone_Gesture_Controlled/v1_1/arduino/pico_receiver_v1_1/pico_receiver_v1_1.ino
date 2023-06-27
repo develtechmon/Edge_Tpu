@@ -22,7 +22,6 @@ void setup() {
   radio.setDataRate(RF24_250KBPS);
   radio.openReadingPipe(0,address);
   radio.startListening();
-
 }
 
 unsigned long last_Time =0;
