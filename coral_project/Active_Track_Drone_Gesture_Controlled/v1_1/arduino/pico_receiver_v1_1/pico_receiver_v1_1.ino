@@ -27,15 +27,16 @@ void setup() {
 unsigned long last_Time =0;
 
 void receive_the_data()
-{
+{ 
+  //Serial.println("Receive the data");
   if(radio.available()> 0)
   {
     byte Array[6];
     radio.read(&Array, sizeof(Array));
     
-    //Serial.println(Array[3]);
+    Serial.println(Array[3]);
 
-    for (int i = 0; i < 6; i++)
+    //for (int i = 0; i < 6; i++)
     {
     // Serial.println(Array[i]);
 
