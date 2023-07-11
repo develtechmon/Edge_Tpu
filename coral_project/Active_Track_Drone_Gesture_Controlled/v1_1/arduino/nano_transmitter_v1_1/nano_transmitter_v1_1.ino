@@ -22,7 +22,8 @@ byte Array[6];
 
 RF24 radio(7, 8); // CE, CSN // nano
 
-const byte address[6] = "00001";
+//const byte address[6] = "00001";
+const uint64_t address = 0xE8E8F0F0E1LL;
 
 void setup() {
   Serial.begin(57600);
