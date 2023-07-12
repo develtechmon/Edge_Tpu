@@ -89,8 +89,8 @@ if __name__ == "__main__":
             sleep(2)
     
     # Init Distance - Obstacle
-    dis = Distance(drone, altitude)
-    dis.start()
+    #dis = Distance(drone, altitude)
+    #dis.start()
     
     state.set_airborne("off")
     
