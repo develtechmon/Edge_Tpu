@@ -24,10 +24,9 @@ class Distance(threading.Thread):
                 #time.sleep(0.1)
                 curTime = time.time()
                 if (self.vl53.range * 0.1 < 800) and (state.get_airborne() == "on"):
-                    #self.drone.control_tab.back()
-                    
-                    self.engine.executeChangesNow(-0.4,0,self.altitude)
-                    self.engine.send_movement_command_YAW(0)
+                    print("Distance")                    
+                    #self.engine.executeChangesNow(-0.4,0,self.altitude)
+                    #self.engine.send_movement_command_YAW(0)
 
                 #print("Range: {0}mm ({1:.2f}ms)".format(self.vl53.range * 0.1, time.time() - curTime))
         
