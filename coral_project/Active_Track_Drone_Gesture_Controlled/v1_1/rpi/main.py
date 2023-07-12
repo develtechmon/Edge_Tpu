@@ -3,7 +3,7 @@ import threading
 from drone import *
 from time import sleep
 from distance import *
-from state import *
+import state
 
 altitude = 1.3
 
@@ -242,3 +242,18 @@ if __name__ == "__main__":
                 
         except:
             pass
+        
+    guide.join()
+    right.join()
+    left.join()
+    forward.join()
+    back.join()
+    yawleft.join()
+    yawright.join()
+    land.join()
+    stop.join()
+    
+    
+    
+    
+    
