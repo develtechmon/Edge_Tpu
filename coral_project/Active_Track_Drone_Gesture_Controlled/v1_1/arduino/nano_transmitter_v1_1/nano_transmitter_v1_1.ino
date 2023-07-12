@@ -22,8 +22,8 @@ byte Array[6];
 
 RF24 radio(7, 8); // CE, CSN // nano
 
-//const byte address[6] = "00001";
-const uint64_t address = 0xE8E8F0F0E1LL;
+const byte address[6] = "00001";
+//const uint64_t address = 0xE8E8F0F0E1LL;
 
 void setup() {
   Serial.begin(57600);
@@ -71,25 +71,25 @@ void loop() {
   Serial.println(x_axis);
 
   if (x_axis < 60 &&  Array[2] == 1){
-    Serial.print("Move Right"); //move forward - w
+    Serial.print("Move Forward"); //move forward - w
     Serial.println("  ");
     Array[3] = 'w'; // - original d
   }
 
   else if (x_axis > 200 && Array[2] == 1){
-    Serial.print("Move Left"); // move  backward
+    Serial.print("Move Backward"); // move  backward
     Serial.println("  ");
     Array[3] = 's'; // - original a
   }
 
   else if (y_axis < 70 && Array[2] == 1){
-    Serial.print("Move Forward"); // move left
+    Serial.print("Move Left"); // move left
     Serial.println("  ");
     Array[3] = 'a'; // - original w
   }
 
   else if (y_axis > 200 && Array[2] == 1){
-    Serial.print("Move Backward"); //move right
+    Serial.print("Move Right"); //move right
     Serial.println("  ");
     Array[3] = 'd'; // - original s
   }
@@ -108,13 +108,13 @@ void loop() {
   }
 
   else if (x_axis < 60 &&  Array[2] == 0){
-    Serial.print("Move Right"); //move forward - w
+    Serial.print("Move Forward"); //move forward - w
     Serial.println("  ");
     Array[3] = 'w'; // - original d
   }
 
   else if (x_axis > 200 && Array[2] == 0){
-    Serial.print("Move Left"); // move  backward
+    Serial.print("Move Backward"); // move  backward
     Serial.println("  ");
     Array[3] = 's'; // - original a
   }

@@ -4,8 +4,8 @@
 
 RF24 radio(4, 5); // CE, CSN 
 
-//const byte address[6] = "00001";
-const uint64_t address = 0xE8E8F0F0E1LL;
+const byte address[6] = "00001";
+//const uint64_t address = 0xE8E8F0F0E1LL;
 
 char receivedData[32] = "";
 int xAxis, yAxis, Zaxis;
