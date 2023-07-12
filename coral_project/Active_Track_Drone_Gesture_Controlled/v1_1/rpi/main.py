@@ -97,7 +97,7 @@ if __name__ == "__main__":
             receivedata = getData(ser)
             
             if receivedata != None:
-                print(receivedata)
+                #print(receivedata)
                 # print(chr(receivedata))  
                             
                 if (receivedata == 'g'):
