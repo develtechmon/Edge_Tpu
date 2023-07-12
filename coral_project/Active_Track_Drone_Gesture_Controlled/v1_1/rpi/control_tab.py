@@ -154,7 +154,6 @@ class controlTab:
             if self.vehicle.location.global_relative_frame.alt>=altitude*0.95:
                 #print ("Reached target altitude")
                 break
-            state.set_airborne("on")
             time.sleep(1)
             
     def guided(self):

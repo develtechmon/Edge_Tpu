@@ -13,6 +13,7 @@ def guided_mode():
     
 def up_mode():
     drone.control_tab.armAndTakeoff(altitude)
+    state.set_airborne("on")
     #drone.control_tab.armAndTakeoff_nogps(altitude)
     
 def yawleft_mode():
