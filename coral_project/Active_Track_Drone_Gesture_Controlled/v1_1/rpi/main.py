@@ -3,6 +3,7 @@ import threading
 from drone import *
 from time import sleep
 from distance import *
+from state import *
 
 altitude = 1.3
 
@@ -11,6 +12,7 @@ def guided_mode():
     up_mode()
     
 def up_mode():
+    state.set_airborne("on")
     drone.control_tab.armAndTakeoff(altitude)
     #drone.control_tab.armAndTakeoff_nogps(altitude)
     
