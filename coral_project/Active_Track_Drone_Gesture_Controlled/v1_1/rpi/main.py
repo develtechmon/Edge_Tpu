@@ -1,5 +1,6 @@
 import serial
 import threading
+import state
 from drone import *
 from time import sleep
 from distance import *
@@ -89,7 +90,9 @@ if __name__ == "__main__":
     # Init Distance - Obstacle
     dis = Distance(drone, altitude)
     dis.start()
-            
+    
+    state.set_airborne("off")
+    
     while drone.is_active:
         try:
             receivedata = getData(ser)
