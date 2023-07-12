@@ -3,7 +3,7 @@ from pymavlink import mavutil
 from time import sleep
 from engines import *
 import numpy as np
-#import state
+import state
 
 class controlTab:
     def __init__(self,D):
@@ -154,6 +154,7 @@ class controlTab:
             if self.vehicle.location.global_relative_frame.alt>=altitude*0.95:
                 #print ("Reached target altitude")
                 break
+            state.set_airborne("on")
             time.sleep(1)
             
     def guided(self):
