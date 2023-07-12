@@ -2,6 +2,7 @@ import serial
 import threading
 from drone import *
 from time import sleep
+from distance import *
 
 altitude = 1.3
 
@@ -84,6 +85,10 @@ if __name__ == "__main__":
 
         except Exception as e:
             sleep(2)
+    
+    # Init Distance - Obstacle
+    dis = Distance(drone, altitude)
+    dis.start()
             
     while drone.is_active:
         try:
