@@ -91,13 +91,13 @@ void loop() {
   }
 
   // Using Yaw Switch
-  else if (y_axis > 200 && Array[2] == 0){ //  else if (x_axis < 50 && Array[2] == 0){
+  else if (y_axis > 200 && Array[2] == 0){ 
     Serial.print("Yaw Switch Right"); 
     Serial.println("  ");
     Array[3] = 'yr';
   }
 
-  else if (y_axis < 70 && Array[2] == 0){ // else if (x_axis > 200 && Array[2] == 0){
+  else if (y_axis < 70 && Array[2] == 0){ 
     Serial.print("Yaw Switch Left");
     Serial.println("  ");
     Array[3] = 'yl';
@@ -154,7 +154,5 @@ void loop() {
   Serial.println("  ");
 
   radio.write(&Array, sizeof(Array));
-
-  //delay(50);
 
 }

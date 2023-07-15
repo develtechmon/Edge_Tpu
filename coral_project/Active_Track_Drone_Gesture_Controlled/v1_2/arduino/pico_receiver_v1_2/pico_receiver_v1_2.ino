@@ -30,10 +30,8 @@ unsigned long last_Time =0;
 
 void receive_the_data()
 { 
-  //Serial.println("Receive the data");
   if(radio.available()> 0)
   {
-    
     radio.read(&Array, sizeof(Array));
     
     //Serial.println(Array[3]);
