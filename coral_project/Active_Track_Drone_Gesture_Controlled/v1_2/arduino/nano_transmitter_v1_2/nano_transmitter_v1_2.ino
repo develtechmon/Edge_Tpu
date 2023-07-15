@@ -66,7 +66,7 @@ void loop() {
   Array[2] = digitalRead(yaw_switch);    
   Serial.println(x_axis);
 
-  if (x_axis < 70 &&  Array[2] == 1){
+  if (x_axis < 85 &&  Array[2] == 1){
     Serial.print("Move Forward"); //move forward - w
     Serial.println("  ");
     Array[3] = 'w'; // - original d
@@ -103,7 +103,7 @@ void loop() {
     Array[3] = 'yl';
   }
 
-  else if (x_axis < 70 &&  Array[2] == 0){
+  else if (x_axis < 85 &&  Array[2] == 0){
     Serial.print("Move Forward"); //move forward - w
     Serial.println("  ");
     Array[3] = 'w'; // - original d
