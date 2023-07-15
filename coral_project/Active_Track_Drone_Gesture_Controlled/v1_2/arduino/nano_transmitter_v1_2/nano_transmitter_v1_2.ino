@@ -27,6 +27,12 @@ const byte address[6] = "00001";
 
 void setup() {
   Serial.begin(9600);
+  radio.begin();
+  radio.setAutoAck(false);
+  radio.setPALevel(RF24_PA_MIN);
+  radio.setDataRate(RF24_250KBPS);
+  radio.openWritingPipe(address);
+  radio.stopListening();  
 
   Wire.begin();
 
@@ -35,13 +41,6 @@ void setup() {
   pinMode(yaw_switch, INPUT_PULLUP);
 
   mpu.initialize();
-
-  radio.begin();
-  radio.setAutoAck(false);
-  radio.setPALevel(RF24_PA_MIN);
-  radio.setDataRate(RF24_250KBPS);
-  radio.openWritingPipe(address);
-  radio.stopListening();  
 }
 
 void loop() {
