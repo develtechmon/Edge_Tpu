@@ -39,6 +39,8 @@
 --input test_data/parrot.jpg
 
 ## Alternatively you can also use tflite_runtime instead of coral. To install tflite
+- >  sudo pip install tflite-runtime (see this link https://coral.ai/docs/edgetpu/tflite-python/#update-existing-tf-lite-code-for-the-edge-tpu_
+     and https://www.tensorflow.org/lite/guide/python
 - > sudo pip install tflite-support
 - > sudo pip install protobuf
 - > sudo pip install numpy
