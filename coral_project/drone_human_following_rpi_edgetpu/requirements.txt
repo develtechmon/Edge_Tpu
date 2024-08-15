@@ -1,3 +1,11 @@
+Python Version : 3.9.2
+Distributor ID:	Raspbian
+Description:	Raspbian GNU/Linux 11 (bullseye)
+Release:	11
+Codename:	bullseye 32 bit
+
+To work with Picam2, please disable legacy camera support !
+
 absl-py==1.4.0
 Adafruit-Blinka==8.18.1
 adafruit-circuitpython-busdevice==5.2.4
